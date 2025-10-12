@@ -3,15 +3,17 @@ import dbConfig from "./config/database.js";
 import dotenv from "dotenv";
 import userRouter from "./routes/userRoute.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
-
 dbConfig();
+
 const app = express();
+app.use(cookieParser());
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5175",
+    origin: "http://localhost:5174",
     credentials: true,
   })
 );

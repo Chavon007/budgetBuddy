@@ -1,5 +1,6 @@
 import usermodel from "../model/usermodel.js";
 import passwordUltiz from "../ultiz/hashedPassword.js";
+import generateToken from "../ultiz/token.js";
 
 //Create account
 const createAccount = async (req, res) => {
@@ -35,4 +36,37 @@ const createAccount = async (req, res) => {
   }
 };
 
-export default createAccount;
+//Login user
+
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    console.log("Login route hit", req.body);
+    const login = await usermodel.findOne({ email });
+    if (!login) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const isMatch = await passwordUltiz.comparePassword(
+      password,
+      login.password
+    );
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const token = generateToken(login);
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 3600000,
+      sameSite: "strict",
+    });
+
+    res.status(200).json({ message: "Login successful" });
+  } catch (err) {
+    res.status(401).json({ message: "Can't Login" });
+  }
+};
+export default { createAccount, loginUser };

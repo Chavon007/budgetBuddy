@@ -91,7 +91,7 @@ function SignUp() {
     <div className="container mx-auto">
       <div className="flex justify-between w-[100%] h-[110vh]">
         <div className="w-[100%] md:w-[100%] lg:w-[50%] flex flex-col items-center">
-          <h3 className="text-base lg:max-w-[50%] text-center mx-auto font-bartle mt-[80px] lg:mt-[50px] text-gray-500">
+          <h3 className="text-base lg:max-w-[50%] text-center mx-auto font-bartle mt-[50px] lg:mt-[10px] text-gray-500">
             BudgetBuddy
           </h3>
           <p className="text-sm">
