@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import userRouter from "./routes/userRoute.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import incomeRouter from "./routes/income.js";
 
 dotenv.config();
 dbConfig();
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
   res.send("Budgetbuddy backend is running");
 });
 app.use("/api/users", userRouter);
+app.use("/api", incomeRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`);
