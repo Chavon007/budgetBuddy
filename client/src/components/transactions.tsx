@@ -8,7 +8,7 @@ function Transactions() {
             <Link to="/income">Enter Your Income</Link>
           </li>
           <li>
-            <Link to="/expense">Create Expenses</Link>
+            <Link to="/expenses">Create Expenses</Link>
           </li>
         </ul>
       </div>
