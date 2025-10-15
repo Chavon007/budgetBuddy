@@ -4,13 +4,14 @@ import Income from "../model/income.js";
 const createIncome = async (req, res) => {
   try {
     const { amount, date } = req.body;
+    const userId = req.user.id;
 
     if (!amount || !date) {
-      res
+      return res
         .status(400)
         .json({ success: false, message: "Please fill all fields" });
     }
-    const newIncome = await Income.create({ amount, date });
+    const newIncome = await Income.create({ amount, date, userId });
     res.status(200).json({
       success: true,
       message: "Income created successfully",
@@ -23,13 +24,8 @@ const createIncome = async (req, res) => {
 
 const getIncome = async (req, res) => {
   try {
-    const { amount, date } = req.query;
-    if (!amount || !date) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Can't find Income" });
-    }
-    const data = await Income.find({ amount, date });
+    const userId = req.user.id;
+    const data = await Income.find({ userId });
     if (data.length === 0) {
       return res
         .status(404)
@@ -47,13 +43,10 @@ const getIncome = async (req, res) => {
 
 const deletedIncome = async (req, res) => {
   try {
+    const userId = req.user.id;
     const { id } = req.params;
-    if (!id) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Income not found" });
-    }
-    const deleteIncome = await Income.findByIdAndDelete(id);
+
+    const deleteIncome = await Income.findOneAndDelete({ _id: id, userId });
     if (!deleteIncome) {
       return res
         .status(404)
