@@ -5,7 +5,7 @@ import userRouter from "./routes/userRoute.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import incomeRouter from "./routes/income.js";
-
+import expensesRouter from "./routes/expenses.js";
 dotenv.config();
 dbConfig();
 
@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
 });
 app.use("/api/users", userRouter);
 app.use("/api", incomeRouter);
-
+app.use("/api", expensesRouter);
 app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`);
 });

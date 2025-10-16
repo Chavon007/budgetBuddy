@@ -33,7 +33,7 @@ function Expenses() {
     setSuccess("");
 
     try {
-      const res = await fetch("", {
+      const res = await fetch("http://localhost:5000/api/create-expenses", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

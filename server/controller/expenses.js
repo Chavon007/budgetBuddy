@@ -1,5 +1,5 @@
 
-import Expenses from "../model/expenses";
+import Expenses from "../model/expenses.js";
 // create expenses
 
 const createExpenses = async (req, res) => {

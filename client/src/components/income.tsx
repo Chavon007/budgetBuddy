@@ -23,7 +23,7 @@ function Income() {
     setSuccess("");
 
     try {
-      const res = await fetch("", {
+      const res = await fetch("http://localhost:5000/api/create-income", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
