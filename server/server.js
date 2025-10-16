@@ -24,8 +24,8 @@ app.get("/", (req, res) => {
   res.send("Budgetbuddy backend is running");
 });
 app.use("/api/users", userRouter);
-app.use("/api", incomeRouter);
-app.use("/api", expensesRouter);
+app.use("/api/users", incomeRouter);
+app.use("/api/users", expensesRouter);
 app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`);
 });

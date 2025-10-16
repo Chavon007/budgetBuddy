@@ -61,7 +61,7 @@ const loginUser = async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       maxAge: 3600000,
-      sameSite: "strict",
+      sameSite: "none",
     });
 
     res.status(200).json({ message: "Login successful" });

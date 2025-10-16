@@ -31,11 +31,16 @@ const getExpenses = async (req, res) => {
     const userId = req.user.id;
 
     const expenses = await Expenses.find({ userId });
+    
+    // Don't return 404 for empty results - return 200 with empty array
     if (expenses.length === 0) {
-      return res
-        .status(404)
-        .json({ success: false, message: "No expenses found" });
+      return res.status(200).json({ 
+        success: true, 
+        message: "No expenses found", 
+        data: [] 
+      });
     }
+    
     res.status(200).json({
       success: true,
       message: "Fetched all Expenses successfully",
