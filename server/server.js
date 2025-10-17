@@ -14,7 +14,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5174",
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
@@ -24,8 +24,8 @@ app.get("/", (req, res) => {
   res.send("Budgetbuddy backend is running");
 });
 app.use("/api/users", userRouter);
-app.use("/api/users", incomeRouter);
-app.use("/api/users", expensesRouter);
+app.use("/api/", incomeRouter);
+app.use("/api/", expensesRouter);
 app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`);
 });
