@@ -108,7 +108,7 @@ function Transactions() {
                 </h5>
                 {income.map((item, index) => (
                   <div
-                    className="bg-[#3b4d6f] mt-[10px] rounded rounde-3xl border border-[#4a5e84] p-[15px] flex items-center justify-between"
+                    className="bg-[#3b4d6f] mt-[10px] rounded rounde-3xl border border-[#4a5e84] p-[15px] flex items-center justify-between hover:scale-101 transform transition duration-300 hover:border-[#06996b] hover:border-[2px]"
                     key={index}
                   >
                     <div>
@@ -135,7 +135,7 @@ function Transactions() {
                 </h5>
                 {expenses.map((item, index) => (
                   <div
-                    className="bg-[#3b4d6f] mt-[10px] rounded rounde-3xl border border-[#4a5e84] p-[15px] flex items-center justify-between gap-3"
+                    className="bg-[#3b4d6f] mt-[10px] rounded rounde-3xl border border-[#4a5e84] p-[15px] flex items-center justify-between gap-3 hover:scale-101 transform transition duration-300 hover:border-[#ba3853] hover:border-[2px]"
                     key={index}
                   >
                     <div>
