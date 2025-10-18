@@ -27,7 +27,7 @@ function Goal() {
     setLoading(true);
 
     try {
-      const res = await fetch("", {
+      const res = await fetch("http://localhost:5000/api/create-goal", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,17 +57,24 @@ function Goal() {
     const fetchGoals = async () => {
       setLoading(true);
       try {
-        const res = await fetch("", {
-          credentials: "include",
-        });
+        const [getGoalsRes, achievedGoalsRes] = await Promise.all([
+          fetch("http://localhost:5000/api/get-goals", {
+            credentials: "include",
+          }),
+          fetch("http://localhost:5000/api/achieved-goals", {
+            credentials: "include",
+          }),
+        ]);
 
-        if (!res.ok) {
+        if (!getGoalsRes.ok || !achievedGoalsRes.ok) {
           setError("Failed to fetch data");
           return;
         }
 
-        const data = await res.json();
-        setgoals(data || []);
+        const getGoalsData = await getGoalsRes.json();
+        const achievedGoalsData = await achievedGoalsRes.json();
+        setgoals(getGoalsData.data || []);
+        setAchievedGoals(achievedGoalsData.data || []);
       } catch (err) {
         setError("Failed to fetch");
       } finally {
@@ -79,7 +86,7 @@ function Goal() {
 
   const completedGoals = async (id: string) => {
     try {
-      const res = await fetch("", {
+      const res = await fetch(`http://localhost:5000/api/update-goal/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -101,7 +108,7 @@ function Goal() {
 
   const deleteGoals = async (id: string) => {
     try {
-      const res = await fetch("", {
+      const res = await fetch(`http://localhost:5000/api/delete-goal/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -111,7 +118,7 @@ function Goal() {
       }
       const deleteGoal = await res.json();
       setgoals((prev) => prev.filter((g: any) => g._id !== id));
-     console.log(deleteGoal)
+      console.log(deleteGoal);
     } catch (err) {
       setError("Failed to delete goals");
     }

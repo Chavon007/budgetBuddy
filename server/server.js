@@ -6,6 +6,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import incomeRouter from "./routes/income.js";
 import expensesRouter from "./routes/expenses.js";
+import goalRouter from "./routes/goal.js";
 dotenv.config();
 dbConfig();
 
@@ -14,7 +15,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5174",
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 app.use("/api/users", userRouter);
 app.use("/api/", incomeRouter);
 app.use("/api/", expensesRouter);
+app.use("/api", goalRouter);
 app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`);
 });
