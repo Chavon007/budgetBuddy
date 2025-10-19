@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-
+import { IoMdAdd } from "react-icons/io";
+import { GoGoal } from "react-icons/go";
+import { IoMdCheckmark } from "react-icons/io";
+import { MdDeleteOutline } from "react-icons/md";
 interface goalFormData {
   theGoal: string;
   completed: boolean;
@@ -41,6 +44,9 @@ function Goal() {
       }
       const data = await res.json();
       setSuccess("Goal created successfully");
+      setTimeout(() => {
+        setSuccess("");
+      }, 3000);
       setgoals((prev) => [...prev, data]);
       setgoal({
         theGoal: "",
@@ -124,70 +130,107 @@ function Goal() {
     }
   };
   return (
-    <div className="container mx-auto">
-      <div>
-        {/* show error message */}
-        {error && <p style={{ color: "red" }}>{error}</p>}
-
+    <div className="container mx-auto h-[120vh] bg-[#1d283a]">
+      <div className="w-[100%] md:w-[90%] mx-auto h-auto p-[10px] flex flex-col gap-6">
         {/* header */}
-        <div>
-          <h2>
-            <span></span>
+        <div className="w-[100%] lg:w-[50%] lg:mx-auto mt-[40px]">
+          <h2 className="flex items-center justify-center text-2xl lg:text-4xl font-roboto text-white  font-bold">
+            <span className="text-red-300 gap-3">
+              <GoGoal />
+            </span>
             <span>Goals Tracker</span>
           </h2>
-          <p>Set your goals and achieve greatness</p>
+          <p className="font-lora text-sm lg:text-1xl font-bold text-center text-[#607090]">
+            Set your goals and achieve greatness
+          </p>
         </div>
 
         {/* form for goal */}
         <div>
           <form onSubmit={handleSubmit}>
-            <div>
-              {error && <p>{error}</p>}
-              {success && <p>{success}</p>}
+            <div className="text-center">
+              {error && (
+                <p className="font-serif text-red-500 text-xs">{error}</p>
+              )}
+              {success && (
+                <p className="font-serif text-green-500 text-xs">{success}</p>
+              )}
             </div>
-            <div>
-              <input
-                type="text"
-                value={goal.theGoal}
-                onChange={(e) => setgoal({ ...goal, theGoal: e.target.value })}
-                placeholder="What's your goal? (e.g., Save $5000 for vacation)"
-              />
-            </div>
-            <div>
-              <button type="submit">Add Goal</button>
+            <div className="flex justify-between items-center  w-[70%] mx-auto p-[10px] ">
+              <div className="bg-[#2a3a55] w-[85%] p-[10px] rounded rounded-1xl">
+                <input
+                  className="w-[100%] focus:outline-none text-white placeholder:text-sm text-base font-lora"
+                  type="text"
+                  value={goal.theGoal}
+                  onChange={(e) =>
+                    setgoal({ ...goal, theGoal: e.target.value })
+                  }
+                  placeholder="What's your goal? (e.g., Save $5000 for vacation)"
+                />
+              </div>
+              <div>
+                <button
+                  className="bg-[#06996b] p-[10px] flex gap-1 justify-between items-center max-w-[100px] text-white text-sm font-lora cursor-pointer hover:scale-105 transform transition duration:3000 hover:bg-green-500 rounded rounded-1xl"
+                  type="submit"
+                >
+                  {" "}
+                  <span className="font-bold text-1xl">
+                    <IoMdAdd />
+                  </span>
+                  <span>Add Goal</span>
+                </button>
+              </div>
             </div>
           </form>
         </div>
 
         {/* achived goal */}
 
-        <div>
+        <div className="h-auto w-[90%] mx-auto flex justify-between mt-[50px]">
           {/* set Goals */}
-          <div>
+          <div className="rounded rounded-1xl bg-[#2a3a55] w-[60%] flex flex-col gap-2 p-[10px]">
             {/* header */}
             <div>
-              <h3>
-                <span></span>
+              <h3 className="text-[#ba3853] flex items-center gap-2 text-1xl font-bold font-lora">
+                <span className="font-bold text-2xl bg-[#492e42] p-[5px] rounded rounded-1xl">
+                  <GoGoal />
+                </span>
                 <span>Active Goals</span>
               </h3>
             </div>
             {/* Goals */}
             <div>
               {goals.length === 0 ? (
-                <p>No Goal created</p>
+                <p className="text-center text-white font-roboto text-1xl italic">
+                  No Goal created yet!
+                </p>
               ) : (
                 goals.map((goal: any) => (
-                  <div key={goal._id}>
-                    <input
-                      type="checkbox"
-                      onChange={() => completedGoals(goal._id)}
-                    />
-                    <h4>{goal.theGoal}</h4>
-                    <small>{goal.createdAt}</small>
+                  <div
+                    className="w-[95%] p-[10px] flex justify-between items-center"
+                    key={goal._id}
+                  >
+                    <div className="flex gap-4 items-center">
+                      <input
+                        type="checkbox"
+                        onChange={() => completedGoals(goal._id)}
+                      />
+                      <span>
+                        <h4 className="text-white  text-1xl font-roboto">
+                          {goal.theGoal}
+                        </h4>
+                        <small className="text-gray-300 text-xs font-lora">
+                          {goal.createdAt}
+                        </small>
+                      </span>
+                    </div>
                     <button
+                      className="text-[#ba3853] font-bold text-2xl bg-[#492e42] p-[5px] rounded rounded-1xl currsor-pointer hover:bg-red-100"
                       type="submit"
                       onClick={() => deleteGoals(goal._id)}
-                    ></button>
+                    >
+                      <MdDeleteOutline />
+                    </button>
                   </div>
                 ))
               )}
@@ -195,21 +238,31 @@ function Goal() {
           </div>
 
           {/* achived goals */}
-          <div>
+          <div className="rounded rounded-1xl bg-[#2a3a55] w-[30%] flex flex-col gap-2 p-[10px]">
             {/* header */}
-            <div>
-              <span></span>
-              <span>Achieved</span>
+            <div className=" flex flex-col gap-2">
+              <div className="text-[#06996b] flex items-center gap-2 text-1xl font-bold font-lora">
+                <span className="font-bold text-2xl bg-teal-800 p-[5px] rounded rounded-1xl">
+                  <IoMdCheckmark />
+                </span>
+                <span className="">Achieved</span>
+              </div>
               <div>
                 {/* achived */}
                 <div>
                   {achievedGoals.length === 0 ? (
-                    <p>No goals achieved yet</p>
+                    <p className="text-center text-white font-roboto text-1xl italic">
+                      No goals achieved yet
+                    </p>
                   ) : (
                     achievedGoals.map((achieve, index) => (
                       <div key={index}>
-                        <p>{achieve.theGoal}</p>
-                        <small>{achieve.completedAt}</small>
+                        <p className="text-white  text-1xl font-roboto">
+                          {achieve.theGoal}
+                        </p>
+                        <small className="text-gray-300 text-xs font-lora">
+                          {achieve.completedAt}
+                        </small>
                       </div>
                     ))
                   )}
