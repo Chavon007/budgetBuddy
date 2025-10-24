@@ -6,6 +6,7 @@ import Transactions from "./components/transactions";
 import Income from "./components/income";
 import Expenses from "./components/expenses";
 import Goal from "./components/goal";
+import Profile from "./components/profile";
 import {
   Route,
   BrowserRouter as Router,
@@ -25,6 +26,7 @@ function App() {
         <Route path="/income" element={<Income />} />
         <Route path="/expenses" element={<Expenses />} />
         <Route path="/goal" element={<Goal />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );

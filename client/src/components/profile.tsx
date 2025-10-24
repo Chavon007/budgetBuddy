@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { ImProfile } from "react-icons/im";
 interface profileData {
   firstName: string;
   lastName: string;
@@ -16,6 +16,7 @@ function Profile() {
     phone: "",
     currency: "",
   });
+  const [isEditing, setIsEditing] = useState(false);
   const [success, setSuccess] = useState("");
 
   useEffect(() => {
@@ -68,50 +69,110 @@ function Profile() {
         phone: data.phone || "",
         currency: data.currency || "",
       });
+      setIsEditing(false);
     } catch (err: any) {
       console.log("Can't upadte profile now:", err.message);
     }
   };
   return (
-    <div className="container mx-auto">
-      <div>
-        <div>
+    <div className="container mx-auto w-[100%] h-[100vh] bg-[#1d283a]">
+      <div className="w-[100%] md:w-[90%] mx-auto h-auto p-[10px] flex flex-col gap-5">
+        <div className=" flex justify-center gap-3 items-center text-2xl lg:text-4xl font-roboto text-white text-center font-bold mt-[30px]">
+          <span className="text-red-500 ">
+            <ImProfile />
+          </span>
+          <h2>Your profile</h2>
+        </div>
+        <div className="w-[100%] lg:w-[80%] mx-auto bg-[#2a3a55] rounded rounded-2xl py-[30px] px-[15px] flex flex-col  h-auto gap-10">
           <h2>
-            <span>Name</span>
-            <span>{profileData.firstName}</span>
-            <span>{profileData.lastName}</span>
+            <span className="text-white  text-1xl font-roboto">Name:</span>
+            <span className="text-gray-300 text-xs font-lora">
+              {profileData.firstName}
+            </span>
+            <span className="text-gray-300 text-xs font-lora">
+              {profileData.lastName}
+            </span>
           </h2>
           <p>
-            <span>Email:</span>
-            <span>{profileData.email}</span>
+            <span className="text-white  text-1xl font-roboto">Email:</span>
+            <span className="text-gray-300 text-xs font-lora">
+              {profileData.email}
+            </span>
           </p>
           <p>
-            <span>Phone Number:</span>
-            <span>{profileData.phone}</span>
+            <span className="text-white  text-1xl font-roboto">
+              Phone Number:
+            </span>
+            <span className="text-gray-300 text-xs font-lora">
+              {profileData.phone}
+            </span>
           </p>
           <h6>
-            <span>Currency:</span>
-            <span>{profileData.currency}</span>
+            <span className="text-white  text-1xl font-roboto">Currency:</span>
+            <span className="text-gray-300 text-xs font-lora">
+              {profileData.currency}
+            </span>
           </h6>
+
+          <button
+            className="bg-[#06996b] p-[10px] flex gap-1 justify-between items-center max-w-[100px] text-white text-sm font-lora cursor-pointer hover:scale-105 transform transition duration:3000 hover:bg-green-500 rounded rounded-1xl"
+            onClick={() => setIsEditing(true)}
+          >
+            Edit Profile
+          </button>
         </div>
 
-        <div>
+        {isEditing && (
+          <div>
+            <div onClick={() => setIsEditing(false)}></div>
             <form onSubmit={editProfile}>
-                {success && <p>{success}</p>}
-                <label htmlFor="">First Name</label>
-                <input type="text" value={profileData.firstName}  onChange={(e) => setProfileData({...profileData, firstName:e.target.value})} />
+              <div onClick={() => setIsEditing(false)}></div>
+              {success && <p>{success}</p>}
+              <label htmlFor="">First Name</label>
+              <input
+                type="text"
+                value={profileData.firstName}
+                onChange={(e) =>
+                  setProfileData({ ...profileData, firstName: e.target.value })
+                }
+              />
 
-                <label htmlFor="">Last Name</label>
-                <input type="text"  value={profileData.lastName} onChange={(e) => setProfileData({...profileData, lastName:e.target.value})}/>
-                 <label htmlFor="">Email</label>
-                <input type="text"  value={profileData.email} onChange={(e) => setProfileData({...profileData, email:e.target.value})}/>
-                 <label htmlFor="">Phone Number</label>
-                <input type="text" value={profileData.phone} onChange={(e) => setProfileData({...profileData, phone:e.target.value})}/>
-                 <label htmlFor="">Currency</label>
-                <input type="text" value={profileData.currency} onChange={(e) => setProfileData({...profileData, currency:e.target.value})}/>
-                <button type="submit">Save</button>
+              <label htmlFor="">Last Name</label>
+              <input
+                type="text"
+                value={profileData.lastName}
+                onChange={(e) =>
+                  setProfileData({ ...profileData, lastName: e.target.value })
+                }
+              />
+              <label htmlFor="">Email</label>
+              <input
+                type="text"
+                value={profileData.email}
+                onChange={(e) =>
+                  setProfileData({ ...profileData, email: e.target.value })
+                }
+              />
+              <label htmlFor="">Phone Number</label>
+              <input
+                type="text"
+                value={profileData.phone}
+                onChange={(e) =>
+                  setProfileData({ ...profileData, phone: e.target.value })
+                }
+              />
+              <label htmlFor="">Currency</label>
+              <input
+                type="text"
+                value={profileData.currency}
+                onChange={(e) =>
+                  setProfileData({ ...profileData, currency: e.target.value })
+                }
+              />
+              <button type="submit">Save</button>
             </form>
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );
