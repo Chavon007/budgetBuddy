@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  currency: {
+    type: String,
+    required: false,
+  },
 });
 
 export default mongoose.model("user", userSchema);
