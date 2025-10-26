@@ -24,7 +24,7 @@ function Profile() {
   }, []);
   const getProfile = async () => {
     try {
-      const res = await fetch("", {
+      const res = await fetch("http://localhost:5000/api/users/profile", {
         credentials: "include",
       });
       if (!res.ok) {
@@ -32,12 +32,13 @@ function Profile() {
         return;
       }
       const data = await res.json();
+      const user = data.data;
       setProfileData({
-        firstName: data.firstName,
-        lastName: data.lastName,
-        phone: data.phone,
-        email: data.email,
-        currency: data.currency,
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+        phone: user.phone || "",
+        email: user.email || "",
+        currency: user.currency || "",
       });
     } catch (err: any) {
       console.error("Can't fatch now:", err.message);
@@ -47,7 +48,7 @@ function Profile() {
   const editProfile = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch("", {
+      const res = await fetch("http://localhost:5000/api/users/update-profile", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -62,12 +63,14 @@ function Profile() {
 
       const data = await res.json();
       setSuccess("Profile Updated");
+      setTimeout(() => setSuccess(""), 3000);
+      const user = data.data;
       setProfileData({
-        firstName: data.firstName || "",
-        lastName: data.lastName || "",
-        email: data.email || "",
-        phone: data.phone || "",
-        currency: data.currency || "",
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+        email: user.email || "",
+        phone: user.phone || "",
+        currency: user.currency || "",
       });
       setIsEditing(false);
     } catch (err: any) {
@@ -76,7 +79,7 @@ function Profile() {
   };
   return (
     <div className="container mx-auto w-[100%] h-[100vh] bg-[#1d283a]">
-      <div className="w-[100%] md:w-[90%] mx-auto h-auto p-[10px] flex flex-col gap-5">
+      <div className="w-[100%] md:w-[90%]  mx-auto h-auto p-[10px] flex flex-col gap-5">
         <div className=" flex justify-center gap-3 items-center text-2xl lg:text-4xl font-roboto text-white text-center font-bold mt-[30px]">
           <span className="text-red-500 ">
             <ImProfile />
@@ -123,9 +126,10 @@ function Profile() {
         </div>
 
         {isEditing && (
-          <div>
-            <div onClick={() => setIsEditing(false)}></div>
-            <form onSubmit={editProfile}>
+          <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-70 backdrop-blur-sm z-50 ">
+            <div className="w-[70%] h-[70vh] p-6 rounded rounded-1xl  bg-[#2a3a55]">
+                <div onClick={() => setIsEditing(false)}></div>
+            <form className="flex flex-col gap-2" onSubmit={editProfile}>
               <div onClick={() => setIsEditing(false)}></div>
               {success && <p>{success}</p>}
               <label htmlFor="">First Name</label>
@@ -171,6 +175,7 @@ function Profile() {
               />
               <button type="submit">Save</button>
             </form>
+            </div>
           </div>
         )}
       </div>
