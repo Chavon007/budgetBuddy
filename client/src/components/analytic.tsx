@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { GrAnalytics } from "react-icons/gr";
+import { FaChartPie } from "react-icons/fa";
 import {
   BarChart,
   PieChart,
@@ -104,8 +106,9 @@ function ExpensesAnalytics() {
       <div className="w-[100%] md:w-[90%] mx-auto h-auto p-[10px] flex flex-col gap-6">
         {/* Header */}
         <div className="w-[100%] lg:w-[50%] lg:mx-auto mt-[40px]">
-          <h2 className="text-2xl lg:text-4xl font-roboto text-white text-center font-bold">
-            BudgetBuddy Analytics
+          <h2 className="text-1xl flex items-center gap-2 justify-center lg:text-4xl font-roboto text-white text-center font-bold">
+            <span className="text-red-500"><GrAnalytics/></span>
+            <span>BudgetBuddy Analytics</span>
           </h2>
           <p className="font-lora text-sm lg:text-1xl font-bold text-center text-[#607090]">
             Track your financial journey with detailed insights
@@ -125,17 +128,18 @@ function ExpensesAnalytics() {
                 <p className="text-xs italic font-lora text-gray-300">
                   ₦{(total[header.key as keyof totalData] || 0).toLocaleString()}
                 </p>
+                <small>{total.date}</small>
               </div>
             ))}
           </div>
         </div>
 
         <div className=" w-[100%] md:w-[70%] mx-auto mt-[20px] flex flex-col justify-center items-center">
-          <div className="text-base lg:text-1xl font-roboto text-white text-center font-bold">
-            <h5>Expenses by Catergories</h5>
+          <div className="">
+            <h5 className="flex items-center justify-center gap-2 text-base lg:text-2xl font-roboto text-white text-center font-bold"><span className="text-[#82ca9d]"><FaChartPie/></span><span>Expenses by Catergories</span></h5>
           </div>
 
-          <ResponsiveContainer width="100%" height={350}>
+          <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
                 data={expensesData.map((e) => ({
