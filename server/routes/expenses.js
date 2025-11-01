@@ -19,5 +19,6 @@ router.put(
   authMiddleware,
   expensesController.updateExpenses
 );
+router.get("/totalexpenses", authMiddleware, expensesController.totalExpenses);
 
 export default router;

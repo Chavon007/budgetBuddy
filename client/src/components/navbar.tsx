@@ -19,7 +19,7 @@ function Navbar() {
               <Link to="/transactions">Transactions</Link>
             </li>
             <li>
-              <Link to="/analytic">Analytics</Link>
+              <Link to="/analysis">Analytics</Link>
             </li>
             <li>
               <Link to="/goal">Goals</Link>

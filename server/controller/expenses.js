@@ -1,4 +1,4 @@
-
+import mongoose from "mongoose";
 import Expenses from "../model/expenses.js";
 // create expenses
 
@@ -31,16 +31,16 @@ const getExpenses = async (req, res) => {
     const userId = req.user.id;
 
     const expenses = await Expenses.find({ userId });
-    
+
     // Don't return 404 for empty results - return 200 with empty array
     if (expenses.length === 0) {
-      return res.status(200).json({ 
-        success: true, 
-        message: "No expenses found", 
-        data: [] 
+      return res.status(200).json({
+        success: true,
+        message: "No expenses found",
+        data: [],
       });
     }
-    
+
     res.status(200).json({
       success: true,
       message: "Fetched all Expenses successfully",
@@ -56,7 +56,10 @@ const deleteExpenses = async (req, res) => {
     const userId = req.user.id;
     const { id } = req.params;
 
-    const deletedExpenses = await Expenses.findOneAndDelete({ _id: id, userId });
+    const deletedExpenses = await Expenses.findOneAndDelete({
+      _id: id,
+      userId,
+    });
     if (!deletedExpenses) {
       return res
         .status(404)
@@ -106,4 +109,31 @@ const updateExpenses = async (req, res) => {
   }
 };
 
-export default {createExpenses, updateExpenses, deleteExpenses, getExpenses}
+const totalExpenses = async (req, res) => {
+  try {
+    const userId = new mongoose.Types.ObjectId(req.user.id); 
+
+    const total = await Expenses.aggregate([
+      { $match: { userId } },
+      { $group: { _id: null, totalExpense: { $sum: "$amountSpend" } } },
+    ]);
+
+    const totalExpense = total[0]?.totalExpense || 0;
+
+    res.status(200).json({
+      success: true,
+      message: "Total amount spent fetched",
+      data: totalExpense,
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+export default {
+  createExpenses,
+  updateExpenses,
+  deleteExpenses,
+  getExpenses,
+  totalExpenses,
+};

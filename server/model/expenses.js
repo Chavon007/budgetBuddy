@@ -7,7 +7,7 @@ const expensesSchema = new mongoose.Schema({
     required: true,
   },
   amountSpend: {
-    type: String,
+    type: Number,
     required: true,
   },
   product: {
@@ -19,7 +19,7 @@ const expensesSchema = new mongoose.Schema({
     required: true,
   },
   quantity: {
-    type: String,
+    type: Number,
     required: true,
   },
 });

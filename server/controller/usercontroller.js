@@ -64,7 +64,7 @@ const loginUser = async (req, res) => {
       sameSite: "none",
     });
 
-    res.status(200).json({ message: "Login successful" });
+    res.status(200).json({ success:true,  message: "Login successful", data: login, token });
   } catch (err) {
     res.status(401).json({ message: "Can't Login" });
   }

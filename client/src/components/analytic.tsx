@@ -29,12 +29,15 @@ interface totalData {
 const header = [
   {
     label: "Total Income",
+    key: "totalIncome",
   },
   {
     label: "Total Expenses",
+    key: "totalExpenses",
   },
   {
     label: "Balance",
+    key: "totalBalance",
   },
 ];
 function ExpensesAnalytics() {
@@ -47,6 +50,7 @@ function ExpensesAnalytics() {
   });
   useEffect(() => {
     fetchExpensesData();
+    totalData();
   }, []);
   const fetchExpensesData = async () => {
     try {
@@ -67,13 +71,13 @@ function ExpensesAnalytics() {
     try {
       const [totalIncomeRes, totalExpensesRes, totalBalanceRes] =
         await Promise.all([
-          fetch("", {
+          fetch("http://localhost:5000/api/get-total-income", {
             credentials: "include",
           }),
-          fetch("", {
+          fetch("http://localhost:5000/api/totalexpenses", {
             credentials: "include",
           }),
-          fetch("", {
+          fetch("http://localhost:5000/api/get-total-balance", {
             credentials: "include",
           }),
         ]);
@@ -85,39 +89,77 @@ function ExpensesAnalytics() {
       const totalBalanceData = await totalBalanceRes.json();
 
       setTotal({
-        totalBalance: totalBalanceData.data?.totalBalance || 0,
-        totalExpenses: totalExpensesData.data?.totalExpenses || 0,
-        totalIncome: totalIncomeData.data?.totalIncome || 0,
-        date: Date.now().toString(),
+        totalBalance: totalBalanceData.data || 0,
+        totalExpenses: totalExpensesData.data || 0,
+        totalIncome: totalIncomeData.data || 0,
+        date: new Date().toISOString(),
       });
     } catch (err) {
       console.log("Can't fetch Data", err);
     }
   };
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto h-[109vh] bg-[#1d283a]">
       {/*  */}
-      <div>
+      <div className="w-[100%] md:w-[90%] mx-auto h-auto p-[10px] flex flex-col gap-6">
         {/* Header */}
-        <div>
-          <h2>BudgetBuddy Analytics</h2>
-          <p>Track your financial journey with detailed insights</p>
+        <div className="w-[100%] lg:w-[50%] lg:mx-auto mt-[40px]">
+          <h2 className="text-2xl lg:text-4xl font-roboto text-white text-center font-bold">
+            BudgetBuddy Analytics
+          </h2>
+          <p className="font-lora text-sm lg:text-1xl font-bold text-center text-[#607090]">
+            Track your financial journey with detailed insights
+          </p>
         </div>
 
-        <div>
-          <div>
+        <div className=" w-[100%] md:w-[70%] mx-auto mt-[20px]">
+          <div className="flex justify-between items-center gap-2">
             {header.map((header, index) => (
-              <div key={index}>
-                <h4>{header.label}</h4>
+              <div
+                key={index}
+                className="bg-[#3b4d6f] md:w-[200px] flex flex-col justify-center items-center rounded rounded-1xl p-[10px] hover:scale-103 transition transform duration-300 hover:border-[#1d283a] hover:border-[2px]"
+              >
+                <h4 className="text-white  text-sm md:text-1xl font-bold font-lora">
+                  {header.label}
+                </h4>
+                <p className="text-xs italic font-lora text-gray-300">
+                  ₦{(total[header.key as keyof totalData] || 0).toLocaleString()}
+                </p>
               </div>
             ))}
-            <p>{total.totalIncome}</p>
-            <p>{total.totalExpenses}</p>
-            <p>{total.totalBalance}</p>
           </div>
         </div>
 
-        <div></div>
+        <div className=" w-[100%] md:w-[70%] mx-auto mt-[20px] flex flex-col justify-center items-center">
+          <div className="text-base lg:text-1xl font-roboto text-white text-center font-bold">
+            <h5>Expenses by Catergories</h5>
+          </div>
+
+          <ResponsiveContainer width="100%" height={350}>
+            <PieChart>
+              <Pie
+                data={expensesData.map((e) => ({
+                  name: e.product,
+                  value: e.amountSpend,
+                }))}
+                dataKey="value"
+                nameKey="name"
+                outerRadius={100}
+                fill="#82ca9d"
+                label={({ name, value }) => {
+                  const total = expensesData.reduce(
+                    (acc, item) => acc + item.amountSpend,
+                    0
+                  );
+                  const percent = ((value / total) * 100).toFixed(1);
+                  return `${name}: ₦${value} (${percent}%)`;
+                }}
+              />
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </div>
   );
