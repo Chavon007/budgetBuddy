@@ -101,7 +101,7 @@ function ExpensesAnalytics() {
     }
   };
   return (
-    <div className="container mx-auto h-[109vh] bg-[#1d283a]">
+    <div className="container mx-auto h-auto bg-[#1d283a]">
       {/*  */}
       <div className="w-[100%] md:w-[90%] mx-auto h-auto p-[10px] flex flex-col gap-6">
         {/* Header */}

@@ -7,6 +7,7 @@ import Income from "./components/income";
 import Expenses from "./components/expenses";
 import Goal from "./components/goal";
 import Profile from "./components/profile";
+import Dashboard from "./components/dashboard";
 import ExpensesAnalytics from "./components/analytic";
 import {
   Route,
@@ -29,6 +30,7 @@ function App() {
         <Route path="/goal" element={<Goal />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/analysis" element={<ExpensesAnalytics />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </Router>
   );
