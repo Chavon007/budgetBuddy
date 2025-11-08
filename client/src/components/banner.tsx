@@ -23,7 +23,7 @@ function Banner() {
           <h2 className="text-1xl md:text-3xl lg:text-4xl leading-[3rem] tracking-[2px] font-roboto text-white font-bold">
             Take Control of Your Finances
           </h2>
-          <p className=" w-[100%] lg:w-[70%] font-lora text-xs md:text-sm italic tracking-[2px] text-gray-200">
+          <p className="w-[100%] lg:w-[70%] font-lora text-xs md:text-sm italic tracking-[2px] text-gray-200">
             Track expenses, set goals, and achieve financial freedom with
             BudgetBuddy - your personal finance companion.
           </p>

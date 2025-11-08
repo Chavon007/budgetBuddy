@@ -1,8 +1,31 @@
 import { Link } from "react-router-dom";
+
+const navbarLink = [
+  {
+    link: "/dashboard",
+    name: "Dashboard",
+  },
+  {
+    link: "/transactions",
+    name: "Transactions",
+  },
+  {
+    link: "/analysis",
+    name: "Analytics",
+  },
+  {
+    link: "/goal",
+    name: "Goal",
+  },
+  {
+    link: "/profile",
+    name: "Profile",
+  },
+];
 function Navbar() {
   return (
     <div className="container mx-auto">
-      <div>
+      <div className="flex justify-between items-center w-[95%] p-[15px] mx-auto">
         {/* icon */}
         <div>
           <img src="" alt="" />
@@ -10,24 +33,12 @@ function Navbar() {
         </div>
 
         {/* nav links */}
-        <div>
-          <ul>
-            <li>
-              <Link to="/dashboard">Dashboard</Link>
-            </li>
-            <li>
-              <Link to="/transactions">Transactions</Link>
-            </li>
-            <li>
-              <Link to="/analysis">Analytics</Link>
-            </li>
-            <li>
-              <Link to="/goal">Goals</Link>
-            </li>
-            <li>
-              <Link to="/profile">Profile</Link>
-            </li>
-          </ul>
+        <div className="flex gap-4">
+          {navbarLink.map((l, index) => (
+            <div key={index}>
+              <Link to={l.link}>{l.name}</Link>
+            </div>
+          ))}
         </div>
 
         {/* logout */}

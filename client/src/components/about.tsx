@@ -29,7 +29,7 @@ const aboutDetails = [
 function About() {
   return (
     <div className="container mx-auto">
-      <div className="w-[100%] h-auto">
+      <div className="w-[100%] h-auto mb-[20px]">
         <div className="w-[95%] mx-auto">
           <div className="flex flex-col gap-2 justify-center items-center p-[40px]">
             <h3 className="text-3xl font-roboto font-bold tracking-[2px]">
@@ -44,10 +44,12 @@ function About() {
           {/*  */}
           <div className="flex flex-col gap-3">
             {aboutDetails.map((about, index) => (
-              <div className="bg-[#1d283a] p-[20px] rounded-1xl" key={index}>
-                <h4 className="w-[10%] bg-[#182333] p-[10px] flex justify-center items-center">{about.icon}</h4>
-                <h3>{about.header}</h3>
-                <p>{about.text}</p>
+              <div className="bg-gray-50 p-[20px] rounded-1xl" key={index}>
+                <h4 className="max-w-[50px] h-[50px] bg-gray-200 p-[10px] flex justify-center items-center font-bold text-2xl text-green-500">
+                  {about.icon}
+                </h4>
+                <h3 className="text-1xl font-bold font-roboto text-gray-600">{about.header}</h3>
+                <p className="font-lora italic text-gray-600">{about.text}</p>
               </div>
             ))}
           </div>
