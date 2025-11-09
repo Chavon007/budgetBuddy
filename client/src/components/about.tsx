@@ -32,10 +32,10 @@ function About() {
       <div className="w-[100%] h-auto mb-[20px]">
         <div className="w-[95%] mx-auto">
           <div className="flex flex-col gap-2 justify-center items-center p-[40px]">
-            <h3 className="text-3xl font-roboto font-bold tracking-[2px]">
+            <h3 className="md:text-3xl font-roboto font-bold tracking-[2px]">
               About BudgetBuddy
             </h3>
-            <p className="max-w-[550px] font-lora italic text-gray-600 text-center">
+            <p className="w-[100%] text-sm  text-base md:max-w-[550px] font-lora italic text-gray-600 text-center">
               A simple yet powerful tool designed to help you manage your
               personal finances with ease and confidence.
             </p>
