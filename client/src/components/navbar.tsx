@@ -27,6 +27,25 @@ const navbarLink = [
 ];
 function Navbar() {
   const [menu, setMenu] = useState(false);
+
+  const handleLogout = async () => {
+    try {
+      const log = await fetch("http://localhost:5000/api/users/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      const data = await log.json();
+
+      if (log.ok) {
+        console.log(data.message);
+        window.location.href = "/login";
+      } else {
+        console.log("Failed to logout");
+        alert("Failed to logout, Please try again");
+      }
+    } catch (error) {}
+  };
   return (
     <div className="container mx-auto">
       <div className="flex justify-between  items-center w-[95%] p-[15px] mx-auto">
@@ -59,7 +78,11 @@ function Navbar() {
 
           {/* logout */}
           <div className="hidden lg:block bg-gray-50 w-[100px] text-center p-[10px] font-roboto text-gray-500 font-bold hover:bg-gray-300 hover:text-white rounded rounded-1xl cursor-pointer">
-            <button className="cursor-pointer" type="button">
+            <button
+              onClick={handleLogout}
+              className="cursor-pointer"
+              type="button"
+            >
               Log out
             </button>
           </div>
@@ -92,7 +115,7 @@ function Navbar() {
             <div className=" p-[10px] font-roboto text-white font-bold hover:bg-gray-300 hover:text-white rounded rounded-1xl cursor-pointer">
               <button
                 className="cursor-pointer"
-                onClick={() => setMenu(false)}
+                onClick={handleLogout}
                 type="button"
               >
                 Log out

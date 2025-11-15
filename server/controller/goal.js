@@ -31,7 +31,7 @@ const createGoal = async (req, res) => {
 const getGoals = async (req, res) => {
   try {
     const userId = req.user.id;
-    const getGoal = await Goal.find({ userId });
+    const getGoal = await Goal.find({ userId, completed: { $ne: true } });
 
     if (getGoal.length === 0) {
       return res
@@ -116,4 +116,10 @@ const deleteGoal = async (req, res) => {
   }
 };
 
-export default{deleteGoal, createGoal, updateAchievedGoals, getGoals, getAchievedGoals}
+export default {
+  deleteGoal,
+  createGoal,
+  updateAchievedGoals,
+  getGoals,
+  getAchievedGoals,
+};

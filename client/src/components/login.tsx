@@ -41,8 +41,9 @@ function Login() {
       setSuccess("Login successful");
       setFormData({ email: "", password: "" });
       setTimeout(() => {
+        localStorage.setItem("loggedin", "true");
         window.location.href = "/home";
-      }, 3000);
+      }, 1000);
 
       console.log(data);
     } catch (error) {

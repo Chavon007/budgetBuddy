@@ -188,7 +188,7 @@ function Dashboard() {
                     {mTotal.label}
                   </span>
                 </h5>
-                <p className="text-2xl pl-[10px] italic font-lora text-gray-300 flex ga-2">
+                <p className="text-1xl pl-[10px] italic font-lora text-gray-300 flex ga-2">
                   ₦
                   {(total[mTotal.key as keyof totalData] || 0).toLocaleString()}
                 </p>

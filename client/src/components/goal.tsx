@@ -48,7 +48,7 @@ function Goal() {
       setTimeout(() => {
         setSuccess("");
       }, 3000);
-      setgoals((prev) => [...prev, data]);
+      setgoals((prev) => [...prev, data.data]);
       setgoal({
         theGoal: "",
       });
@@ -107,7 +107,7 @@ function Goal() {
       }
       const updated = await res.json();
       setgoals((prev) => prev.filter((g: any) => g._id !== id));
-      setAchievedGoals((prev) => [...prev, updated]);
+      setAchievedGoals((prev) => [...prev, updated.data]);
     } catch (err) {
       setError("Failed to mark as achieved");
     }

@@ -8,4 +8,5 @@ router.post("/signup", userController.createAccount);
 router.post("/login", userController.loginUser);
 router.get("/profile", authMiddleware, userController.getUser);
 router.put("/update-profile", authMiddleware, userController.updateProfile);
+router.post("/logout", authMiddleware, userController.logout);
 export default router;

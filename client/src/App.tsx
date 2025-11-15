@@ -9,6 +9,8 @@ import Goal from "./components/goal";
 import Profile from "./components/profile";
 import Dashboard from "./components/dashboard";
 import ExpensesAnalytics from "./components/analytic";
+import Protect from "./components/protectedRoutes";
+import Authentication from "./hook/auth";
 import {
   Route,
   BrowserRouter as Router,
@@ -17,20 +19,77 @@ import {
 } from "react-router-dom";
 
 function App() {
+  const isAuthenticated = Authentication();
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Navigate to="/signUp" />} />
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/transactions" element={<Transactions />} />
-        <Route path="/income" element={<Income />} />
-        <Route path="/expenses" element={<Expenses />} />
-        <Route path="/goal" element={<Goal />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/analysis" element={<ExpensesAnalytics />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+          path="/home"
+          element={
+            <Protect isAuthenticated={isAuthenticated}>
+              <Home />
+            </Protect>
+          }
+        />
+        <Route
+          path="/transactions"
+          element={
+            <Protect isAuthenticated={isAuthenticated}>
+              <Transactions />
+            </Protect>
+          }
+        />
+        <Route
+          path="/income"
+          element={
+            <Protect isAuthenticated={isAuthenticated}>
+              <Income />
+            </Protect>
+          }
+        />
+        <Route
+          path="/expenses"
+          element={
+            <Protect isAuthenticated={isAuthenticated}>
+              <Expenses />
+            </Protect>
+          }
+        />
+        <Route
+          path="/goal"
+          element={
+            <Protect isAuthenticated={isAuthenticated}>
+              <Goal />
+            </Protect>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <Protect isAuthenticated={isAuthenticated}>
+              <Profile />
+            </Protect>
+          }
+        />
+        <Route
+          path="/analysis"
+          element={
+            <Protect isAuthenticated={isAuthenticated}>
+              <ExpensesAnalytics />
+            </Protect>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <Protect isAuthenticated={isAuthenticated}>
+              <Dashboard />
+            </Protect>
+          }
+        />
       </Routes>
     </Router>
   );
