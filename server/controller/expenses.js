@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Expenses from "../model/expenses.js";
+import { monthRange } from "../ultiz/monthRange.js";
 // create expenses
 
 const createExpenses = async (req, res) => {
@@ -111,7 +112,7 @@ const updateExpenses = async (req, res) => {
 
 const totalExpenses = async (req, res) => {
   try {
-    const userId = new mongoose.Types.ObjectId(req.user.id); 
+    const userId = new mongoose.Types.ObjectId(req.user.id);
 
     const total = await Expenses.aggregate([
       { $match: { userId } },
@@ -130,10 +131,36 @@ const totalExpenses = async (req, res) => {
   }
 };
 
+// monthly expenses
+
+const monthlyExpenses = async (req, res) => {
+  try {
+    const userId = mongoose.Types.ObjectId(req.user.id);
+    const month = parseInt(req.query.month);
+    const year = parseInt(req.query.year);
+
+    const { start, end } = monthRange(year, month);
+
+    const expenses = await Expenses.find({
+      userId,
+      date: { $gte: start, $lt: end },
+    }).sort({ date: -1 });
+
+    res.status(200).json({
+      success: true,
+      message: "Monthly expenses fetched",
+      data: expenses,
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
 export default {
   createExpenses,
   updateExpenses,
   deleteExpenses,
   getExpenses,
+  monthlyExpenses,
   totalExpenses,
 };

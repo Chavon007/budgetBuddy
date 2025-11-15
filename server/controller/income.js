@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import Income from "../model/income.js";
-import Expenses from "../model/expenses.js"; // for balance calc
+import Expenses from "../model/expenses.js";
 
+import { monthRange } from "../ultiz/monthRange.js";
 // CREATE INCOME
 const createIncome = async (req, res) => {
   try {
@@ -71,7 +72,7 @@ const deletedIncome = async (req, res) => {
   }
 };
 
-// GET TOTAL INCOME ✅ FIXED
+// GET TOTAL INCOME
 const totalIncome = async (req, res) => {
   try {
     const userId = new mongoose.Types.ObjectId(req.user.id); // ✅ FIXED
@@ -93,10 +94,10 @@ const totalIncome = async (req, res) => {
   }
 };
 
-// GET TOTAL BALANCE ✅ FIXED
+// GET TOTAL BALANCE
 const totalBalance = async (req, res) => {
   try {
-    const userId = new mongoose.Types.ObjectId(req.user.id); // ✅ FIXED
+    const userId = new mongoose.Types.ObjectId(req.user.id);
 
     const totalIncome = await Income.aggregate([
       { $match: { userId } },
@@ -122,10 +123,32 @@ const totalBalance = async (req, res) => {
   }
 };
 
+//Get monthly income
+
+const monthlyIncome = async (req, res) => {
+  try {
+    const userId = mongoose.Types.ObjectId(req.user.id);
+    const month = parseInt(req.query.month);
+    const year = parseInt(req.query.year);
+
+    const { start, end } = monthRange(year, month);
+
+    const incomeMonthly = await Income.find({
+      userId,
+      date: { $gte: start, $lt: end },
+    }).sort({ date: -1 });
+
+    res.status(200).json({ success: true, data: incomeMonthly });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 export default {
   createIncome,
   getIncome,
   deletedIncome,
   totalIncome,
   totalBalance,
+  monthlyIncome,
 };
