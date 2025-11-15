@@ -4,6 +4,7 @@ import { IoTrendingUpOutline } from "react-icons/io5";
 import { IoTrendingDownOutline } from "react-icons/io5";
 import { IoCart } from "react-icons/io5";
 import { FaNairaSign } from "react-icons/fa6";
+import Back from "./back";
 interface incomeIformation {
   amount: number;
   date: string;
@@ -61,14 +62,20 @@ function Transactions() {
   if (error) return <p>{error}</p>;
   return (
     <div className="container mx-auto h-[120vh] bg-[#1d283a]">
-      <div className="w-[100%] md:w-[90%] mx-auto h-auto p-[10px] flex flex-col gap-6">
-        <div className="w-[100%] lg:w-[50%] lg:mx-auto mt-[40px]">
-          <h2 className=" text-2xl lg:text-4xl font-roboto text-white text-center font-bold">
-            Transaction Dashboard
-          </h2>
-          <p className="font-lora text-sm lg:text-1xl font-bold text-center text-[#607090]">
-            Track your income and expenses
-          </p>
+      <div className="w-[100%] md:w-[98%] mx-auto h-auto p-[10px] flex flex-col gap-6">
+        <div className="w-[100%] flex justify-between items-center  mt-[40px]">
+          <div>
+            <h2 className="text-2xl lg:text-3xl font-roboto text-white font-bold">
+              Transaction Dashboard
+            </h2>
+            <p className="font-lora text-sm lg:text-1xl pl-[5px] text-[#607090]">
+              Track your income and expenses
+            </p>
+          </div>
+
+          <div>
+            <Back />
+          </div>
         </div>
 
         <div className="w-[100%] lg:w-[50%] mt-[30px] flex justify-center items-center mx-auto">
@@ -101,7 +108,7 @@ function Transactions() {
             <div className="flex justify-between gap-3 items-center h-auto mt-[10px]">
               <div className="w-[50%]">
                 <h5 className="text-[#06996b] flex items-center gap-2 text-1xl font-bold font-lora">
-                  <span className="font-bold text-2xl bg-teal-800 p-[5px] rounded rounded-1xl">
+                  <span className="font-bold text-2xl bg-green-500 p-[5px] text-white rounded rounded-1xl">
                     <IoTrendingUpOutline />
                   </span>{" "}
                   <span>Income</span>
@@ -119,7 +126,7 @@ function Transactions() {
                         {item.date}
                       </small>
                     </div>
-                    <div className="bg-teal-800 text-[#06996b] p-[10px] rounded rounded-2xl">
+                    <div className="bg-teal-800 text-[#06996b] p-[10px] text-white rounded rounded-2xl">
                       <FaNairaSign />
                     </div>
                   </div>
@@ -128,7 +135,7 @@ function Transactions() {
 
               <div className="w-[50%]">
                 <h5 className="text-[#ba3853] mt-[35px] flex items-center gap-2 text-1xl font-bold font-lora">
-                  <span className="font-bold text-2xl bg-[#492e42] p-[5px] rounded rounded-1xl">
+                  <span className="font-bold text-white text-2xl bg-red-500 p-[5px] rounded rounded-1xl">
                     <IoCart />
                   </span>
                   <span> Expenses</span>
@@ -143,7 +150,7 @@ function Transactions() {
                         <span className="font-lora text-base text-red-300">
                           Product:
                         </span>
-                        <span className="font-inter text-1xl italic text-gray-300">
+                        <span className="font-inter text-1xl italic text-white">
                           {item.product}
                         </span>
                       </h3>
@@ -151,7 +158,7 @@ function Transactions() {
                         <span className="font-lora text-sm text-red-300">
                           Amount:
                         </span>
-                        <span className="font-inter text-sm italic text-gray-300">
+                        <span className="font-inter text-sm italic text-white">
                           ₦{item.amountSpend}
                         </span>
                       </p>
@@ -173,7 +180,7 @@ function Transactions() {
                       </small>
                     </div>
                     <div className="text-[#ba3853] font-bold text-2xl bg-[#492e42] p-[5px] rounded rounded-1xl">
-                      <span className="">
+                      <span className="text-white">
                         <IoCart />
                       </span>
                     </div>

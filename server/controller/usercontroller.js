@@ -59,12 +59,14 @@ const loginUser = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: false,
       maxAge: 3600000,
-      sameSite: "none",
+      sameSite: "lax",
     });
 
-    res.status(200).json({ success:true,  message: "Login successful", data: login, token });
+    res
+      .status(200)
+      .json({ success: true, message: "Login successful", data: login, token });
   } catch (err) {
     res.status(401).json({ message: "Can't Login" });
   }
@@ -101,13 +103,11 @@ const updateProfile = async (req, res) => {
         .status(404)
         .json({ success: false, message: "User not found" });
     }
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Profile updated successfully",
-        data: updateUserProfile,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      data: updateUserProfile,
+    });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }

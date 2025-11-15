@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { GrAnalytics } from "react-icons/gr";
 import { FaChartPie } from "react-icons/fa";
+import Back from "./back";
 import {
   BarChart,
   PieChart,
@@ -14,6 +15,7 @@ import {
   ResponsiveContainer,
   Label,
 } from "recharts";
+import Home from "./home";
 
 interface expensesdata {
   amountSpend: number;
@@ -103,19 +105,27 @@ function ExpensesAnalytics() {
   return (
     <div className="container mx-auto h-auto bg-[#1d283a]">
       {/*  */}
-      <div className="w-[100%] md:w-[90%] mx-auto h-auto p-[10px] flex flex-col gap-6">
+      <div className="w-[100%] md:w-[98%] mx-auto h-auto p-[10px] flex flex-col gap-6">
         {/* Header */}
-        <div className="w-[100%] lg:w-[50%] lg:mx-auto mt-[40px]">
-          <h2 className="text-1xl flex items-center gap-2 justify-center lg:text-4xl font-roboto text-white text-center font-bold">
-            <span className="text-red-500"><GrAnalytics/></span>
-            <span>BudgetBuddy Analytics</span>
-          </h2>
-          <p className="font-lora text-sm lg:text-1xl font-bold text-center text-[#607090]">
-            Track your financial journey with detailed insights
-          </p>
+        <div className="w-[100%] flex justify-between items-center mt-[40px]">
+          <div>
+            <h4 className="text-1xl  lg:text-2xl font-roboto text-white flex items-center gap-2 font-bold">
+              <span className=" text-2xl text-red-500">
+                <GrAnalytics />
+              </span>
+              <span>BudgetBuddy Analytics</span>
+            </h4>
+            <p className="font-lora text-sm lg:text-base  text-[#607090]">
+              Track your financial journey with detailed insights
+            </p>
+          </div>
+
+          <div>
+            <Back />
+          </div>
         </div>
 
-        <div className=" w-[100%] md:w-[70%] mx-auto mt-[20px]">
+        <div className=" w-[100%] md:w-[70%] mx-auto mt-[30px]">
           <div className="flex justify-between items-center gap-2">
             {header.map((header, index) => (
               <div
@@ -126,7 +136,8 @@ function ExpensesAnalytics() {
                   {header.label}
                 </h4>
                 <p className="text-xs italic font-lora text-gray-300">
-                  ₦{(total[header.key as keyof totalData] || 0).toLocaleString()}
+                  ₦
+                  {(total[header.key as keyof totalData] || 0).toLocaleString()}
                 </p>
                 <small>{total.date}</small>
               </div>
@@ -136,7 +147,12 @@ function ExpensesAnalytics() {
 
         <div className=" w-[100%] md:w-[70%] mx-auto mt-[20px] flex flex-col justify-center items-center">
           <div className="">
-            <h5 className="flex items-center justify-center gap-2 text-base lg:text-2xl font-roboto text-white text-center font-bold"><span className="text-[#82ca9d]"><FaChartPie/></span><span>Expenses by Catergories</span></h5>
+            <h5 className="flex items-center justify-center gap-2 text-base lg:text-2xl font-roboto text-white text-center font-bold">
+              <span className="text-[#82ca9d]">
+                <FaChartPie />
+              </span>
+              <span>Expenses by Catergories</span>
+            </h5>
           </div>
 
           <ResponsiveContainer width="100%" height={300}>

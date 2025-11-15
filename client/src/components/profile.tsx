@@ -1,6 +1,7 @@
 import { IoMdClose } from "react-icons/io";
 import { useState, useEffect } from "react";
 import { ImProfile } from "react-icons/im";
+import Back from "./back";
 interface profileData {
   firstName: string;
   lastName: string;
@@ -84,12 +85,18 @@ function Profile() {
   };
   return (
     <div className="container mx-auto w-[100%] h-[100vh] bg-[#1d283a]">
-      <div className="w-[100%] md:w-[90%]  mx-auto h-auto p-[10px] flex flex-col gap-5">
-        <div className=" flex justify-center gap-3 items-center text-2xl lg:text-4xl font-roboto text-white text-center font-bold mt-[30px]">
-          <span className="text-red-500 ">
-            <ImProfile />
-          </span>
-          <h2>Your profile</h2>
+      <div className="w-[100%] md:w-[98%]  mx-auto h-auto p-[10px] flex flex-col gap-5">
+        <div className=" flex justify-between items-center mt-[20px] ">
+          <div className="flex items-center gap-2 text-2xl font-roboto text-white font-bold">
+            <span className="text-red-500 ">
+              <ImProfile />
+            </span>
+            <h2>Profile</h2>
+          </div>
+
+          <div>
+            <Back />
+          </div>
         </div>
         <div className="flex justify-center h-[70vh] items-center">
           <div className="w-[100%] lg:w-[50%] mx-auto bg-[#2a3a55] rounded rounded-2xl py-[30px] px-[15px] flex flex-col h-auto gap-10">

@@ -3,6 +3,7 @@ import { IoMdAdd } from "react-icons/io";
 import { GoGoal } from "react-icons/go";
 import { IoMdCheckmark } from "react-icons/io";
 import { MdDeleteOutline } from "react-icons/md";
+import Back from "./back";
 interface goalFormData {
   theGoal: string;
   completed: boolean;
@@ -131,18 +132,24 @@ function Goal() {
   };
   return (
     <div className="container mx-auto h-[120vh] bg-[#1d283a]">
-      <div className="w-[100%] md:w-[90%] mx-auto h-auto p-[10px] flex flex-col gap-6">
+      <div className="w-[100%] md:w-[98%] mx-auto h-auto p-[10px] flex flex-col gap-6">
         {/* header */}
-        <div className="w-[100%] lg:w-[50%] lg:mx-auto mt-[40px]">
-          <h2 className="flex items-center justify-center text-2xl lg:text-4xl font-roboto text-white  font-bold">
-            <span className="text-red-300 gap-3">
-              <GoGoal />
-            </span>
-            <span>Goals Tracker</span>
-          </h2>
-          <p className="font-lora text-sm lg:text-1xl font-bold text-center text-[#607090]">
-            Set your goals and achieve greatness
-          </p>
+        <div className="w-[100%] flex justify-between items-center mt-[40px]">
+          <div>
+            <h2 className="flex items-center gap-2 text-2xl lg:text-3xl font-roboto text-white  font-bold">
+              <span className="text-green-500">
+                <GoGoal />
+              </span>
+              <span>Goals Tracker</span>
+            </h2>
+            <p className="font-lora text-sm  text-[#607090]">
+              Set your goals and achieve greatness
+            </p>
+          </div>
+
+          <div>
+            <Back />
+          </div>
         </div>
 
         {/* form for goal */}

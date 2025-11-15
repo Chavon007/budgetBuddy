@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+import { Link } from "react-router-dom";
+import { IoIosArrowRoundBack } from "react-icons/io";
+
 interface expensesFormData {
   amountSpend: number;
   product: string;
@@ -62,10 +65,24 @@ function Expenses() {
   return (
     <div className="container mx-auto">
       <div className="flex  flex-col w-[100%] lg:w-[50%] mx-auto h-[100vh]">
-        <div className="w-[100%]  mt-[20px] ">
-          <h3 className="text-2xl font-bold lg:max-w-[50%] text-center mx-auto font-roboto mt-[10px] lg:mt-[10px] text-gray-500 items-center">
-            Add Expenses
-          </h3>
+        <div className="w-[100%] mb-[60px] flex justify-between items-center mt-[20px] ">
+          <div>
+            <h3 className="text-2xl font-bold  text-center mx-auto font-roboto mt-[10px] lg:mt-[10px] text-gray-500 items-center">
+              Add Expenses
+            </h3>
+          </div>
+
+          <div className="max-w-[300px] p-[10px]">
+            <Link
+              className="flex items-center text-gray-400 hover:text-gray-200 font-lora text-1xl italic gap-1"
+              to="/transactions"
+            >
+              <span>
+                <IoIosArrowRoundBack />
+              </span>
+              <span>Back</span>
+            </Link>
+          </div>
         </div>
         <div className="flex justify-center items-center h-[60vh]">
           <form
