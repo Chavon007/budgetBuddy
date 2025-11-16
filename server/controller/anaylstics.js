@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import expenses from "../model/expenses";
-import income from "../model/income";
-import { monthRange } from "../ultiz/monthRange";
+import Expenses from "../model/expenses.js";
+import income from "../model/income.js";
+import { monthRange } from "../ultiz/monthRange.js";
 
 export const monthlySummary = async (req, res) => {
   try {
@@ -19,7 +19,7 @@ export const monthlySummary = async (req, res) => {
         { $group: { _id: null, total: { $sum: "$amount" } } },
       ]);
 
-      const [expensessumAgg] = await expenses.aggregate([
+      const [expensessumAgg] = await Expenses.aggregate([
         { $match: { userId: userId, date: { $gte: start, $lt: end } } },
         { $group: { _id: null, total: { $sum: "$amountSpend" } } },
       ]);
@@ -43,13 +43,13 @@ export const monthtlypieChart = async (req, res) => {
     const year = parseInt(req.query.year);
     const { start, end } = monthRange(year, month);
 
-    const agg = await expenses.aggregate([
-      { $match: { userid: userId, date: { $gte: start, $lt: end } } },
+    const agg = await Expenses.aggregate([
+      { $match: { userId: userId, date: { $gte: start, $lt: end } } },
       { $group: { _id: "$product", total: { $sum: "$amountSpend" } } },
       { $project: { product: "$_id", total: 1, _id: 0 } },
     ]);
 
-    res.start(200).json({ success: true, data: agg });
+    res.status(200).json({ success: true, data: agg || [] });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }

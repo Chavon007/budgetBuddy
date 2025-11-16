@@ -127,7 +127,7 @@ const totalBalance = async (req, res) => {
 
 const monthlyIncome = async (req, res) => {
   try {
-    const userId = mongoose.Types.ObjectId(req.user.id);
+    const userId = new mongoose.Types.ObjectId(req.user.id);
     const month = parseInt(req.query.month);
     const year = parseInt(req.query.year);
 
@@ -138,7 +138,7 @@ const monthlyIncome = async (req, res) => {
       date: { $gte: start, $lt: end },
     }).sort({ date: -1 });
 
-    res.status(200).json({ success: true, data: incomeMonthly });
+    res.status(200).json({ success: true, data: incomeMonthly  });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }

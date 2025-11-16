@@ -16,6 +16,10 @@ interface expensesInformation {
   date: string;
   quantity: number;
 }
+
+const now = new Date();
+const currentYear = now.getFullYear();
+const currentMonth = now.getMonth();
 function Transactions() {
   const [income, setIncome] = useState<incomeIformation[]>([]);
   const [expenses, setExpenses] = useState<expensesInformation[]>([]);
@@ -26,12 +30,18 @@ function Transactions() {
     const fetchData = async () => {
       try {
         const [incomeRes, expensesRes] = await Promise.all([
-          fetch("http://localhost:5000/api/get-income", {
-            credentials: "include",
-          }),
-          fetch("http://localhost:5000/api/get-expenses", {
-            credentials: "include",
-          }),
+          fetch(
+            `http://localhost:5000/api/monthly-income?month=${currentMonth}&year=${currentYear}`,
+            {
+              credentials: "include",
+            }
+          ),
+          fetch(
+            `http://localhost:5000/api/monthly-expenses?month=${currentMonth}&year=${currentYear}`,
+            {
+              credentials: "include",
+            }
+          ),
         ]);
 
         if (!incomeRes.ok || !expensesRes.ok) {
@@ -55,6 +65,7 @@ function Transactions() {
         setLoading(false);
       }
     };
+
     fetchData();
   }, []);
 

@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import incomeRouter from "./routes/income.js";
 import expensesRouter from "./routes/expenses.js";
 import goalRouter from "./routes/goal.js";
+import analysisRouter from "./routes/anaylstics.js";
 dotenv.config();
 dbConfig();
 
@@ -28,6 +29,7 @@ app.use("/api/users", userRouter);
 app.use("/api/", incomeRouter);
 app.use("/api/", expensesRouter);
 app.use("/api", goalRouter);
+app.use("/api", analysisRouter);
 app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`);
 });

@@ -77,7 +77,7 @@ const deleteExpenses = async (req, res) => {
 };
 const updateExpenses = async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = new mongoose.Types.ObjectId(req.user.id);
     const { id } = req.params;
     const { amountSpend, product, date, quantity } = req.body;
     if (!amountSpend || !product || !date || !quantity) {
@@ -135,7 +135,7 @@ const totalExpenses = async (req, res) => {
 
 const monthlyExpenses = async (req, res) => {
   try {
-    const userId = mongoose.Types.ObjectId(req.user.id);
+    const userId = new mongoose.Types.ObjectId(req.user.id);
     const month = parseInt(req.query.month);
     const year = parseInt(req.query.year);
 

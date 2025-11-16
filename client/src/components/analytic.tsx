@@ -18,10 +18,8 @@ import {
 import Home from "./home";
 
 interface expensesdata {
-  amountSpend: number;
+  total: number;
   product: string;
-  date: string;
-  quantity: number;
 }
 
 interface totalData {
@@ -44,6 +42,10 @@ const header = [
     key: "totalBalance",
   },
 ];
+
+const now = new Date();
+const currentYear = now.getFullYear();
+const currentMonth = now.getMonth();
 function ExpensesAnalytics() {
   const [expensesData, setExpensesData] = useState<expensesdata[]>([]);
   const [total, setTotal] = useState<totalData>({
@@ -58,9 +60,12 @@ function ExpensesAnalytics() {
   }, []);
   const fetchExpensesData = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/get-expenses", {
-        credentials: "include",
-      });
+      const res = await fetch(
+        `http://localhost:5000/api/monthly-pie-chart?month=${currentMonth}&year=${currentYear}`,
+        {
+          credentials: "include",
+        }
+      );
       if (!res.ok) {
         return "Failed to fetch Data";
       }
@@ -160,7 +165,7 @@ function ExpensesAnalytics() {
               <Pie
                 data={expensesData.map((e) => ({
                   name: e.product,
-                  value: e.amountSpend,
+                  value: e.total,
                 }))}
                 dataKey="value"
                 nameKey="name"
@@ -168,7 +173,7 @@ function ExpensesAnalytics() {
                 fill="#82ca9d"
                 label={({ name, value }) => {
                   const total = expensesData.reduce(
-                    (acc, item) => acc + item.amountSpend,
+                    (acc, item) => acc + item.total,
                     0
                   );
                   const percent = ((value / total) * 100).toFixed(1);
