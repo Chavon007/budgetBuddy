@@ -136,10 +136,15 @@ const totalExpenses = async (req, res) => {
 const monthlyExpenses = async (req, res) => {
   try {
     const userId = new mongoose.Types.ObjectId(req.user.id);
-    const month = parseInt(req.query.month);
-    const year = parseInt(req.query.year);
+    const now = new Date();
+
+    const month = parseInt(req.query.month) || now.getMonth() + 1;
+    const year = parseInt(req.query.year) || now.getFullYear();
 
     const { start, end } = monthRange(year, month);
+
+    console.log("month =", month, "year =", year);
+    console.log("start =", start, "end =", end);
 
     const expenses = await Expenses.find({
       userId,

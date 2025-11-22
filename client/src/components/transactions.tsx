@@ -19,25 +19,27 @@ interface expensesInformation {
 
 const now = new Date();
 const currentYear = now.getFullYear();
-const currentMonth = now.getMonth();
+const currentMonth = now.getMonth() + 1;
 function Transactions() {
   const [income, setIncome] = useState<incomeIformation[]>([]);
   const [expenses, setExpenses] = useState<expensesInformation[]>([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [month, setMonth] = useState(currentMonth);
+  const [year, setYear] = useState(currentYear);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [incomeRes, expensesRes] = await Promise.all([
           fetch(
-            `http://localhost:5000/api/monthly-income?month=${currentMonth}&year=${currentYear}`,
+            `http://localhost:5000/api/monthly-income?month=${month}&year=${year}`,
             {
               credentials: "include",
             }
           ),
           fetch(
-            `http://localhost:5000/api/monthly-expenses?month=${currentMonth}&year=${currentYear}`,
+            `http://localhost:5000/api/monthly-expenses?month=${month}&year=${year}`,
             {
               credentials: "include",
             }
@@ -67,12 +69,12 @@ function Transactions() {
     };
 
     fetchData();
-  }, []);
+  }, [month, year]);
 
   if (loading) return <p>loading...</p>;
   if (error) return <p>{error}</p>;
   return (
-    <div className="container mx-auto h-[120vh] bg-[#1d283a]">
+    <div className="container mx-auto h-auto bg-[#1d283a]">
       <div className="w-[100%] md:w-[98%] mx-auto h-auto p-[10px] flex flex-col gap-6">
         <div className="w-[100%] flex justify-between items-center  mt-[40px]">
           <div>
@@ -110,93 +112,149 @@ function Transactions() {
           </ul>
         </div>
 
-        <div className="bg-[#2a3a55] mt-[50px] h-[70vh] rounded rounded-2xl">
-          <div className=" w-[100%] md:w-[95%] md:mx-auto px-[10px] py-[20px]">
-            <h3 className="font-roboto font-semibold text-2xl text-white">
-              Transaction history
-            </h3>
+        <div className="w-[100%] md:w-[95%] md:mx-auto px-[10px] py-[20px] flex flex-col h-[70vh]">
+          <h3 className="font-roboto font-semibold text-2xl text-white mb-4">
+            Transaction History
+          </h3>
 
-            <div className="flex justify-between gap-3 items-center h-auto mt-[10px]">
-              <div className="w-[50%]">
-                <h5 className="text-[#06996b] flex items-center gap-2 text-1xl font-bold font-lora">
-                  <span className="font-bold text-2xl bg-green-500 p-[5px] text-white rounded rounded-1xl">
-                    <IoTrendingUpOutline />
-                  </span>{" "}
-                  <span>Income</span>
-                </h5>
-                {income.map((item, index) => (
-                  <div
-                    className="bg-[#3b4d6f] mt-[10px] rounded rounde-3xl border border-[#4a5e84] p-[15px] flex items-center justify-between hover:scale-101 transform transition duration-300 hover:border-[#06996b] hover:border-[2px]"
-                    key={index}
-                  >
-                    <div>
-                      <h4 className="text-white flex items-center gap-2 text-1xl font-bold font-lora">
-                        ₦{item.amount}
-                      </h4>
-                      <small className="text-xs italic font-lora text-gray-300">
-                        {item.date}
-                      </small>
+          {/* Month/Year selectors */}
+          <div className="mb-4 flex gap-3">
+            <select
+              value={month}
+              onChange={(e) => setMonth(Number(e.target.value))}
+              className="p-2 rounded"
+            >
+              {[
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December",
+              ].map((m, i) => (
+                <option key={i} value={i + 1}>
+                  {m}
+                </option>
+              ))}
+            </select>
+            <select
+              value={year}
+              onChange={(e) => setYear(Number(e.target.value))}
+              className="p-2 rounded"
+            >
+              {Array.from({ length: 5 }, (_, i) => currentYear - i).map((y) => (
+                <option key={y} value={y}>
+                  {y}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Income & Expenses Lists */}
+          <div className="flex gap-3 flex-1 overflow-hidden">
+            {/* Income */}
+            <div className="w-[50%] flex flex-col h-full">
+              <h5 className="text-[#06996b] flex items-center gap-2 text-1xl font-bold font-lora mb-2">
+                <span className="font-bold text-2xl bg-green-500 p-[5px] text-white rounded rounded-1xl">
+                  <IoTrendingUpOutline />
+                </span>
+                Income
+              </h5>
+              <div className="flex-1 overflow-y-auto pr-2 space-y-3 scrollbar-thin scrollbar-thumb-green-500 scrollbar-track-[#1d283a]">
+                {income.length === 0 ? (
+                  <p className="flex justify-center items-center mt-[20px] text-gray-200 italic">
+                    No income for this month.
+                  </p>
+                ) : (
+                  income.map((item, index) => (
+                    <div
+                      key={index}
+                      className="bg-[#3b4d6f] rounded border border-[#4a5e84] p-[15px] flex items-center justify-between hover:scale-101 transform transition duration-300 hover:border-[#06996b] hover:border-[2px]"
+                    >
+                      <div>
+                        <h4 className="text-white flex items-center gap-2 text-1xl font-bold font-lora">
+                          ₦{item.amount}
+                        </h4>
+                        <small className="text-xs italic font-lora text-gray-300">
+                          {new Date(item.date).toLocaleDateString()}
+                        </small>
+                      </div>
+                      <div className="bg-teal-800 text-[#06996b] p-[10px] text-white rounded rounded-2xl">
+                        <FaNairaSign />
+                      </div>
                     </div>
-                    <div className="bg-teal-800 text-[#06996b] p-[10px] text-white rounded rounded-2xl">
-                      <FaNairaSign />
-                    </div>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
+            </div>
 
-              <div className="w-[50%]">
-                <h5 className="text-[#ba3853] mt-[35px] flex items-center gap-2 text-1xl font-bold font-lora">
-                  <span className="font-bold text-white text-2xl bg-red-500 p-[5px] rounded rounded-1xl">
-                    <IoCart />
-                  </span>
-                  <span> Expenses</span>
-                </h5>
-                {expenses.map((item, index) => (
-                  <div
-                    className="bg-[#3b4d6f] mt-[10px] rounded rounde-3xl border border-[#4a5e84] p-[15px] flex items-center justify-between gap-3 hover:scale-101 transform transition duration-300 hover:border-[#ba3853] hover:border-[2px]"
-                    key={index}
-                  >
-                    <div>
-                      <h3 className="flex gap-2 items-center">
-                        <span className="font-lora text-base text-red-300">
-                          Product:
+            {/* Expenses */}
+            <div className="w-[50%] flex flex-col h-full">
+              <h5 className="text-[#ba3853] flex items-center gap-2 text-1xl font-bold font-lora mb-2">
+                <span className="font-bold text-white text-2xl bg-red-500 p-[5px] rounded rounded-1xl">
+                  <IoCart />
+                </span>
+                Expenses
+              </h5>
+              <div className="flex-1 overflow-y-auto pr-2 space-y-3 scrollbar-thin scrollbar-thumb-red-500 scrollbar-track-[#1d283a]">
+                {expenses.length === 0 ? (
+                  <p className="flex justify-center items-center mt-[20px] text-gray-200 italic">
+                    No expenses for this month.
+                  </p>
+                ) : (
+                  expenses.map((item, index) => (
+                    <div
+                      key={index}
+                      className="bg-[#3b4d6f] rounded border border-[#4a5e84] p-[15px] flex items-center justify-between gap-3 hover:scale-101 transform transition duration-300 hover:border-[#ba3853] hover:border-[2px]"
+                    >
+                      <div>
+                        <h3 className="flex gap-2 items-center">
+                          <span className="font-lora text-base text-red-300">
+                            Product:
+                          </span>
+                          <span className="font-inter text-1xl italic text-white">
+                            {item.product}
+                          </span>
+                        </h3>
+                        <p className="flex gap-2 items-center">
+                          <span className="font-lora text-sm text-red-300">
+                            Amount:
+                          </span>
+                          <span className="font-inter text-sm italic text-white">
+                            ₦{item.amountSpend}
+                          </span>
+                        </p>
+                        <h6 className="flex gap-2 items-center">
+                          <span className="font-lora text-xs text-red-300">
+                            Qty:
+                          </span>
+                          <span className="font-inter text-xs italic text-gray-300">
+                            {item.quantity}
+                          </span>
+                        </h6>
+                        <small className="flex gap-2 items-center">
+                          <span className="font-lora text-xs text-red-300">
+                            Date:
+                          </span>
+                          <span className="font-inter text-xs italic text-gray-300">
+                            {item.date}
+                          </span>
+                        </small>
+                      </div>
+                      <div className="text-[#ba3853] font-bold text-2xl bg-[#492e42] p-[5px] rounded rounded-1xl">
+                        <span className="text-white">
+                          <IoCart />
                         </span>
-                        <span className="font-inter text-1xl italic text-white">
-                          {item.product}
-                        </span>
-                      </h3>
-                      <p className="flex gap-2 items-center">
-                        <span className="font-lora text-sm text-red-300">
-                          Amount:
-                        </span>
-                        <span className="font-inter text-sm italic text-white">
-                          ₦{item.amountSpend}
-                        </span>
-                      </p>
-                      <h6 className="flex gap-2 items-center">
-                        <span className="font-lora text-xs text-red-300">
-                          Qty:
-                        </span>
-                        <span className="font-inter text-xs italic text-gray-300">
-                          {item.quantity}
-                        </span>
-                      </h6>
-                      <small className="flex gap-2 items-center">
-                        <span className="font-lora text-xs text-red-300">
-                          Date:
-                        </span>
-                        <span className="font-inter text-xs italic text-gray-300">
-                          {item.date}
-                        </span>
-                      </small>
+                      </div>
                     </div>
-                    <div className="text-[#ba3853] font-bold text-2xl bg-[#492e42] p-[5px] rounded rounded-1xl">
-                      <span className="text-white">
-                        <IoCart />
-                      </span>
-                    </div>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
             </div>
           </div>

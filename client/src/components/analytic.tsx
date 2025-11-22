@@ -14,6 +14,7 @@ import {
   CartesianGrid,
   ResponsiveContainer,
   Label,
+  Cell,
 } from "recharts";
 import Home from "./home";
 
@@ -43,9 +44,18 @@ const header = [
   },
 ];
 
+const color = [
+  "#82ca9d",
+  "#0088FE",
+  "#FFBB28",
+  "#FF8042",
+  "#A28DFF",
+  "#FF4567",
+];
+
 const now = new Date();
 const currentYear = now.getFullYear();
-const currentMonth = now.getMonth();
+const currentMonth = now.getMonth() + 1;
 function ExpensesAnalytics() {
   const [expensesData, setExpensesData] = useState<expensesdata[]>([]);
   const [total, setTotal] = useState<totalData>({
@@ -54,14 +64,21 @@ function ExpensesAnalytics() {
     totalExpenses: 0,
     date: "",
   });
+  const [month, setMonth] = useState(currentMonth);
+  const [year, setYear] = useState(currentYear);
+
   useEffect(() => {
     fetchExpensesData();
+  }, [month, year]);
+
+  useEffect(() => {
     totalData();
   }, []);
+
   const fetchExpensesData = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/monthly-pie-chart?month=${currentMonth}&year=${currentYear}`,
+        `http://localhost:5000/api/monthly-pie-chart?month=${month}&year=${year}`,
         {
           credentials: "include",
         }
@@ -160,6 +177,41 @@ function ExpensesAnalytics() {
             </h5>
           </div>
 
+          <div>
+            <select
+              value={month}
+              onChange={(e) => setMonth(Number(e.target.value))}
+            >
+              {[
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December",
+              ].map((m, i) => (
+                <option key={i} value={i + 1}>
+                  {m}
+                </option>
+              ))}
+            </select>
+            <select
+              value={year}
+              onChange={(e) => setYear(Number(e.target.value))}
+            >
+              {Array.from({ length: 5 }, (_, i) => currentYear - i).map((y) => (
+                <option key={y} value={y}>
+                  {y}
+                </option>
+              ))}
+            </select>
+          </div>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
@@ -170,7 +222,6 @@ function ExpensesAnalytics() {
                 dataKey="value"
                 nameKey="name"
                 outerRadius={100}
-                fill="#82ca9d"
                 label={({ name, value }) => {
                   const total = expensesData.reduce(
                     (acc, item) => acc + item.total,
@@ -179,7 +230,15 @@ function ExpensesAnalytics() {
                   const percent = ((value / total) * 100).toFixed(1);
                   return `${name}: ₦${value} (${percent}%)`;
                 }}
-              />
+              >
+                {expensesData.map((entry, index) => (
+                  <Cell
+                    key={`cell- ${index}`}
+                    fill={color[index % color.length]}
+                  />
+                ))}
+              </Pie>
+
               <Tooltip />
               <Legend />
             </PieChart>

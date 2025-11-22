@@ -128,17 +128,21 @@ const totalBalance = async (req, res) => {
 const monthlyIncome = async (req, res) => {
   try {
     const userId = new mongoose.Types.ObjectId(req.user.id);
-    const month = parseInt(req.query.month);
-    const year = parseInt(req.query.year);
+    const now = new Date();
+
+    const month = parseInt(req.query.month) || now.getMonth() + 1;
+    const year = parseInt(req.query.year) || now.getFullYear();
 
     const { start, end } = monthRange(year, month);
 
+    console.log("month =", month, "year =", year);
+    console.log("start =", start, "end =", end);
     const incomeMonthly = await Income.find({
       userId,
       date: { $gte: start, $lt: end },
     }).sort({ date: -1 });
 
-    res.status(200).json({ success: true, data: incomeMonthly  });
+    res.status(200).json({ success: true, data: incomeMonthly });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }

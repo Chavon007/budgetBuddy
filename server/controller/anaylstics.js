@@ -38,9 +38,13 @@ export const monthlySummary = async (req, res) => {
 
 export const monthtlypieChart = async (req, res) => {
   try {
-    const userId = mongoose.Types.ObjectId(req.user.id);
-    const month = parseInt(req.query.month);
-    const year = parseInt(req.query.year);
+    const userId = new mongoose.Types.ObjectId(req.user.id);
+    const now = new Date();
+    const month = req.query.month
+      ? parseInt(req.query.month)
+      : now.getMonth() + 1;
+    const year = req.query.year ? parseInt(req.query.year) : now.getFullYear();
+
     const { start, end } = monthRange(year, month);
 
     const agg = await Expenses.aggregate([
