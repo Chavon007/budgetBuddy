@@ -5,7 +5,7 @@ import { monthRange } from "../ultiz/monthRange.js";
 
 export const monthlySummary = async (req, res) => {
   try {
-    const userId = mongoose.Types.ObjectId(req.user.id);
+    const userId =new mongoose.Types.ObjectId(req.user.id);
     const months = req.query.months;
     const now = new Date();
     const result = [];

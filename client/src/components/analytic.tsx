@@ -29,6 +29,12 @@ interface totalData {
   totalBalance: number;
   date: string;
 }
+interface monthlySummary {
+  year: number;
+  month: string;
+  expenses: number;
+  income: number;
+}
 const header = [
   {
     label: "Total Income",
@@ -66,6 +72,8 @@ function ExpensesAnalytics() {
   });
   const [month, setMonth] = useState(currentMonth);
   const [year, setYear] = useState(currentYear);
+  const [sumMonth, setSumMonth] = useState(6);
+  const [sumData, setSumData] = useState<monthlySummary[]>([]);
 
   useEffect(() => {
     fetchExpensesData();
@@ -74,6 +82,10 @@ function ExpensesAnalytics() {
   useEffect(() => {
     totalData();
   }, []);
+
+  useEffect(() => {
+    monthlySummary;
+  }, [sumMonth]);
 
   const fetchExpensesData = async () => {
     try {
@@ -93,6 +105,24 @@ function ExpensesAnalytics() {
     }
   };
 
+  const monthlySummary = async () => {
+    try {
+      const summaryRes = await fetch(
+        `http://localhost:5000/api/monthly-summary?month=${setSumMonth}`,
+        {
+          credentials: "include",
+        }
+      );
+
+      if (!summaryRes.ok) {
+        return "Failed to fetch data";
+      }
+      const summaryData = await summaryRes.json();
+      setSumData(summaryData.data || []);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const totalData = async () => {
     try {
       const [totalIncomeRes, totalExpensesRes, totalBalanceRes] =
@@ -246,18 +276,17 @@ function ExpensesAnalytics() {
             </PieChart>
           </ResponsiveContainer>
 
-
           <ResponsiveContainer width="100%" height={300}>
-                <BarChart>
-                  <CartesianGrid/>
-                  <XAxis dataKey="month"/>
-                  <YAxis/>
-                  <Tooltip/>
-                  <Legend/>
+            <BarChart data={sumData}>
+              <CartesianGrid />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
 
-                  <Bar dataKey="income"/>
-                  <Bar dataKey="expenses"/>
-                </BarChart>
+              <Bar dataKey="income" />
+              <Bar dataKey="expenses" />
+            </BarChart>
           </ResponsiveContainer>
         </div>
       </div>

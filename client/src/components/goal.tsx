@@ -163,7 +163,7 @@ function Goal() {
                 <p className="font-serif text-green-500 text-xs">{success}</p>
               )}
             </div>
-            <div className="flex justify-between items-center w-[100%] mx-auto p-[10px] ">
+            <div className="flex justify-between items-center w-[100%] md:w-[60%] mx-auto p-[10px] ">
               <div className="bg-[#2a3a55] w-[70%] md:w-[85%] p-[10px] rounded rounded-1xl">
                 <input
                   className="w-[100%] focus:outline-none text-white placeholder:text-sm text-base font-lora"
