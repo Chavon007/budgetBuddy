@@ -78,15 +78,15 @@ function Transactions() {
       <div className="w-[100%] md:w-[98%] mx-auto h-auto p-[10px] flex flex-col gap-6">
         <div className="w-[100%] flex justify-between items-center  mt-[40px]">
           <div>
-            <h2 className="text-2xl lg:text-3xl font-roboto text-white font-bold">
+            <h2 className="text-base lg:text-3xl font-roboto text-white font-bold">
               Transaction Dashboard
             </h2>
-            <p className="font-lora text-sm lg:text-1xl pl-[5px] text-[#607090]">
+            <p className="font-lora   text-xs lg:text-1xl pl-[5px] text-[#607090]">
               Track your income and expenses
             </p>
           </div>
 
-          <div>
+          <div className="">
             <Back />
           </div>
         </div>
@@ -195,7 +195,7 @@ function Transactions() {
             </div>
 
             {/* Expenses */}
-            <div className="w-[50%] flex flex-col h-full">
+            <div className="w-[60%] md:w-[50%] flex flex-col h-full">
               <h5 className="text-[#ba3853] flex items-center gap-2 text-1xl font-bold font-lora mb-2">
                 <span className="font-bold text-white text-2xl bg-red-500 p-[5px] rounded rounded-1xl">
                   <IoCart />
@@ -211,14 +211,14 @@ function Transactions() {
                   expenses.map((item, index) => (
                     <div
                       key={index}
-                      className="bg-[#3b4d6f] rounded border border-[#4a5e84] p-[15px] flex items-center justify-between gap-3 hover:scale-101 transform transition duration-300 hover:border-[#ba3853] hover:border-[2px]"
+                      className="bg-[#3b4d6f]  rounded border border-[#4a5e84] p-[15px] flex items-center justify-between gap-3 hover:scale-101 transform transition duration-300 hover:border-[#ba3853] hover:border-[2px]"
                     >
-                      <div>
+                      <div className=" max-w-[300px]">
                         <h3 className="flex gap-2 items-center">
-                          <span className="font-lora text-base text-red-300">
+                          <span className="font-lora text-xs md:text-base text-red-300">
                             Product:
                           </span>
-                          <span className="font-inter text-1xl italic text-white">
+                          <span className="font-inter text-xs  md:text-1xl italic text-white">
                             {item.product}
                           </span>
                         </h3>
@@ -243,11 +243,11 @@ function Transactions() {
                             Date:
                           </span>
                           <span className="font-inter text-xs italic text-gray-300">
-                            {item.date}
+                            {new Date(item.date).toLocaleDateString()}
                           </span>
                         </small>
                       </div>
-                      <div className="text-[#ba3853] font-bold text-2xl bg-[#492e42] p-[5px] rounded rounded-1xl">
+                      <div className=" hidden  md:block text-[#ba3853] font-bold text-2xl bg-[#492e42] p-[5px] rounded rounded-1xl">
                         <span className="text-white">
                           <IoCart />
                         </span>

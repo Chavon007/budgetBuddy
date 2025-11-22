@@ -125,19 +125,19 @@ function ExpensesAnalytics() {
     }
   };
   return (
-    <div className="container mx-auto h-auto bg-[#1d283a]">
+    <div className="container mx-auto h-auto md:h-[100vh] lg:h-auto bg-[#1d283a]">
       {/*  */}
       <div className="w-[100%] md:w-[98%] mx-auto h-auto p-[10px] flex flex-col gap-6">
         {/* Header */}
         <div className="w-[100%] flex justify-between items-center mt-[40px]">
-          <div>
-            <h4 className="text-1xl  lg:text-2xl font-roboto text-white flex items-center gap-2 font-bold">
+          <div className="max-w-[200px] md:max-w-[50%] p-[5px]">
+            <h4 className="text-sm  lg:text-2xl font-roboto text-white flex items-center gap-2 font-bold">
               <span className=" text-2xl text-red-500">
                 <GrAnalytics />
               </span>
               <span>BudgetBuddy Analytics</span>
             </h4>
-            <p className="font-lora text-sm lg:text-base  text-[#607090]">
+            <p className="font-lora text-xs lg:text-base  text-[#607090]">
               Track your financial journey with detailed insights
             </p>
           </div>
@@ -154,14 +154,16 @@ function ExpensesAnalytics() {
                 key={index}
                 className="bg-[#3b4d6f] md:w-[200px] flex flex-col justify-center items-center rounded rounded-1xl p-[10px] hover:scale-103 transition transform duration-300 hover:border-[#1d283a] hover:border-[2px]"
               >
-                <h4 className="text-white  text-sm md:text-1xl font-bold font-lora">
+                <h4 className="text-white  text-xs md:text-1xl font-bold font-lora">
                   {header.label}
                 </h4>
                 <p className="text-xs italic font-lora text-gray-300">
                   ₦
                   {(total[header.key as keyof totalData] || 0).toLocaleString()}
                 </p>
-                <small>{total.date}</small>
+                <small className="text-gray-400">
+                  {new Date(total.date).toLocaleDateString()}
+                </small>
               </div>
             ))}
           </div>
@@ -242,6 +244,20 @@ function ExpensesAnalytics() {
               <Tooltip />
               <Legend />
             </PieChart>
+          </ResponsiveContainer>
+
+
+          <ResponsiveContainer width="100%" height={300}>
+                <BarChart>
+                  <CartesianGrid/>
+                  <XAxis dataKey="month"/>
+                  <YAxis/>
+                  <Tooltip/>
+                  <Legend/>
+
+                  <Bar dataKey="income"/>
+                  <Bar dataKey="expenses"/>
+                </BarChart>
           </ResponsiveContainer>
         </div>
       </div>

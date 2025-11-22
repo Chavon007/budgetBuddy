@@ -136,13 +136,13 @@ function Goal() {
         {/* header */}
         <div className="w-[100%] flex justify-between items-center mt-[40px]">
           <div>
-            <h2 className="flex items-center gap-2 text-2xl lg:text-3xl font-roboto text-white  font-bold">
+            <h2 className="flex items-center gap-2 text-sm lg:text-3xl font-roboto text-white  font-bold">
               <span className="text-green-500">
                 <GoGoal />
               </span>
               <span>Goals Tracker</span>
             </h2>
-            <p className="font-lora text-sm  text-[#607090]">
+            <p className="font-lora text-xs max-w-[200px] md:max-w-[300px] text-[#607090]">
               Set your goals and achieve greatness
             </p>
           </div>
@@ -153,8 +153,8 @@ function Goal() {
         </div>
 
         {/* form for goal */}
-        <div>
-          <form onSubmit={handleSubmit}>
+        <div className="">
+          <form className="" onSubmit={handleSubmit}>
             <div className="text-center">
               {error && (
                 <p className="font-serif text-red-500 text-xs">{error}</p>
@@ -163,8 +163,8 @@ function Goal() {
                 <p className="font-serif text-green-500 text-xs">{success}</p>
               )}
             </div>
-            <div className="flex justify-between items-center  w-[70%] mx-auto p-[10px] ">
-              <div className="bg-[#2a3a55] w-[85%] p-[10px] rounded rounded-1xl">
+            <div className="flex justify-between items-center w-[100%] mx-auto p-[10px] ">
+              <div className="bg-[#2a3a55] w-[70%] md:w-[85%] p-[10px] rounded rounded-1xl">
                 <input
                   className="w-[100%] focus:outline-none text-white placeholder:text-sm text-base font-lora"
                   type="text"
@@ -177,11 +177,11 @@ function Goal() {
               </div>
               <div>
                 <button
-                  className="bg-[#06996b] p-[10px] flex gap-1 justify-between items-center max-w-[100px] text-white text-sm font-lora cursor-pointer hover:scale-105 transform transition duration:3000 hover:bg-green-500 rounded rounded-1xl"
+                  className="bg-[#06996b] p-[10px] flex gap-1 justify-between items-center  md:max-w-[100px] text-white text-sm font-lora cursor-pointer hover:scale-105 transform transition duration:3000 hover:bg-green-500 rounded rounded-1xl"
                   type="submit"
                 >
                   {" "}
-                  <span className="font-bold text-1xl">
+                  <span className="font-bold text-xs md:text-sm">
                     <IoMdAdd />
                   </span>
                   <span>Add Goal</span>
@@ -193,9 +193,9 @@ function Goal() {
 
         {/* achived goal */}
 
-        <div className="h-auto w-[90%] mx-auto flex justify-between mt-[50px]">
+        <div className="h-auto w-[95%] md:w-[90%] mx-auto flex justify-between gap-2 mt-[50px]">
           {/* set Goals */}
-          <div className="rounded rounded-1xl bg-[#2a3a55] w-[60%] flex flex-col gap-2 p-[10px]">
+          <div className="rounded rounded-1xl bg-[#2a3a55] w-[50%] md:w-[60%] flex flex-col gap-2 p-[10px]">
             {/* header */}
             <div>
               <h3 className="text-[#ba3853] flex items-center gap-2 text-1xl font-bold font-lora">
@@ -245,7 +245,7 @@ function Goal() {
           </div>
 
           {/* achived goals */}
-          <div className="rounded rounded-1xl bg-[#2a3a55] w-[30%] flex flex-col gap-2 p-[10px]">
+          <div className="rounded rounded-1xl bg-[#2a3a55] w-[50%] md:w-[30%] flex flex-col gap-2 p-[10px]">
             {/* header */}
             <div className=" flex flex-col gap-2">
               <div className="text-[#06996b] flex items-center gap-2 text-1xl font-bold font-lora">

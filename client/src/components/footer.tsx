@@ -6,7 +6,7 @@ function Footer() {
       <div className="bg-[#1d283a] w-[100%] h-auto pb-[10px]">
         <div className="px-[20px] pt-[20px] flex flex-col gap-3">
           {/*  */}
-          <div className="w-[50%] flex flex-col gap-1">
+          <div className="w-[80%] md:w-[50%] flex flex-col gap-1">
             <h2 className="flex items-center gap-2">
               <span></span>
               <span className="text-base md:text-base lg:text-2xl  tracking-[2px] font-roboto text-white font-bold">

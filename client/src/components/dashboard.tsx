@@ -291,7 +291,7 @@ function Dashboard() {
               <span>Recent Expenses</span>
             </h5>
           </div>
-          <div className="flex-col gap-2 mt-[10px]">
+          <div className="flex gap-4 flex-col mt-[10px]">
             {expenses.map((item, index) => (
               <div
                 className="flex justify-between items-center w-[100%] bg-[#4a5f86] mx-auto py-[30px] px-[20px] rounded rounded-2xl"
@@ -320,7 +320,7 @@ function Dashboard() {
             ))}
             <Link
               className="text-sm text-green-400 flex justify-center items-center font-lora mt-[10px] hover:text-green-100"
-              to="/expenses"
+              to="/transactions"
             >
               See All Expenses
             </Link>
