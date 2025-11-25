@@ -16,7 +16,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://budget-buddy-one-olive.vercel.app",
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   })
 );
