@@ -14,8 +14,22 @@ import {
   CartesianGrid,
   ResponsiveContainer,
   // Label,
+  // PieLabelRenderProps,
   Cell,
 } from "recharts";
+
+interface MyPieLabelProps {
+  cx: number;
+  cy: number;
+  midAngle: number;
+  innerRadius: number;
+  outerRadius: number;
+  percent: number;
+  name?: string;
+  value?: number;
+}
+
+
 
 interface expensesdata {
   total: number;
@@ -254,18 +268,43 @@ function ExpensesAnalytics() {
                 dataKey="value"
                 nameKey="name"
                 outerRadius={100}
-                label={({ name, value }: { name: string; value: number }) => {
-                  const total = expensesData.reduce(
-                    (acc, item) => acc + item.total,
-                    0
+                label={(props: MyPieLabelProps) => {
+                  const {
+                    cx,
+                    cy,
+                    midAngle,
+                    innerRadius,
+                    outerRadius,
+                    percent,
+                    name,
+                    value,
+                  } = props;
+
+                  if (!value || !name) return null;
+
+                  const RADIAN = Math.PI / 180;
+                  const radius =
+                    innerRadius + (outerRadius - innerRadius) * 1.2;
+                  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+                  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+                  return (
+                    <text
+                      x={x}
+                      y={y}
+                      fill="white"
+                      textAnchor={x > cx ? "start" : "end"}
+                      dominantBaseline="central"
+                      fontSize={10}
+                    >
+                      {`${name}: ₦${value} (${(percent * 100).toFixed(1)}%)`}
+                    </text>
                   );
-                  const percent = ((value / total) * 100).toFixed(1);
-                  return `${name}: ₦${value} (${percent}%)`;
                 }}
               >
-                {expensesData.map((entry, index) => (
+                {expensesData.map((_, index) => (
                   <Cell
-                    key={`cell- ${index}`}
+                    key={`cell-${index}`}
                     fill={color[index % color.length]}
                   />
                 ))}
@@ -297,18 +336,10 @@ function ExpensesAnalytics() {
               <Legend />
 
               {/* Income bars */}
-              <Bar
-                dataKey="income"
-                fill="#82ca9d"
-                radius={[5, 5, 0, 0]} 
-              />
+              <Bar dataKey="income" fill="#82ca9d" radius={[5, 5, 0, 0]} />
 
               {/* Expenses bars */}
-              <Bar
-                dataKey="expenses"
-                fill="#ff4c4c"
-                radius={[5, 5, 0, 0]} 
-              />
+              <Bar dataKey="expenses" fill="#ff4c4c" radius={[5, 5, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
