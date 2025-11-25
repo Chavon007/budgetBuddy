@@ -123,7 +123,7 @@ function Transactions() {
             <select
               value={month}
               onChange={(e) => setMonth(Number(e.target.value))}
-              className="p-2 rounded"
+              className="p-2 rounded text-gray-200"
             >
               {[
                 "January",
@@ -147,7 +147,7 @@ function Transactions() {
             <select
               value={year}
               onChange={(e) => setYear(Number(e.target.value))}
-              className="p-2 rounded"
+              className="p-2 rounded text-gray-200"
             >
               {Array.from({ length: 5 }, (_, i) => currentYear - i).map((y) => (
                 <option key={y} value={y}>

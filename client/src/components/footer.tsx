@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import { FaNairaSign } from "react-icons/fa6";
 function Footer() {
   return (
     <div className="container mx-auto">
@@ -8,7 +8,9 @@ function Footer() {
           {/*  */}
           <div className="w-[80%] md:w-[50%] flex flex-col gap-1">
             <h2 className="flex items-center gap-2">
-              <span></span>
+              <span className="bg-gray-100 text-green-500 p-[10px] text-1xl rounded rounded-1xl">
+                <FaNairaSign />
+              </span>
               <span className="text-base md:text-base lg:text-2xl  tracking-[2px] font-roboto text-white font-bold">
                 BudgetBuddy
               </span>

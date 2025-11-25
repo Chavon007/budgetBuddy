@@ -91,7 +91,9 @@ function ExpensesAnalytics() {
   const fetchExpensesData = async () => {
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/monthly-pie-chart?month=${month}&year=${year}`,
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/api/monthly-pie-chart?month=${month}&year=${year}`,
         {
           credentials: "include",
         }
@@ -129,15 +131,21 @@ function ExpensesAnalytics() {
     try {
       const [totalIncomeRes, totalExpensesRes, totalBalanceRes] =
         await Promise.all([
-          fetch(`https://budgetbuddy-1-a7pb.onrender.com/api/get-total-income`, {
-            credentials: "include",
-          }),
+          fetch(
+            `https://budgetbuddy-1-a7pb.onrender.com/api/get-total-income`,
+            {
+              credentials: "include",
+            }
+          ),
           fetch(`https://budgetbuddy-1-a7pb.onrender.com/api/totalexpenses`, {
             credentials: "include",
           }),
-          fetch(`https://budgetbuddy-1-a7pb.onrender.com/api/get-total-balance`, {
-            credentials: "include",
-          }),
+          fetch(
+            `https://budgetbuddy-1-a7pb.onrender.com/api/get-total-balance`,
+            {
+              credentials: "include",
+            }
+          ),
         ]);
       if (!totalBalanceRes.ok || !totalExpensesRes.ok || !totalIncomeRes.ok) {
         return "Failed to fetch data";
@@ -215,6 +223,7 @@ function ExpensesAnalytics() {
             <select
               value={month}
               onChange={(e) => setMonth(Number(e.target.value))}
+              className="text-gray-200"
             >
               {[
                 "January",
@@ -238,6 +247,7 @@ function ExpensesAnalytics() {
             <select
               value={year}
               onChange={(e) => setYear(Number(e.target.value))}
+              className="text-gray-200"
             >
               {Array.from({ length: 5 }, (_, i) => currentYear - i).map((y) => (
                 <option key={y} value={y}>

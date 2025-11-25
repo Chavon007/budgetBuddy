@@ -145,7 +145,7 @@ function Dashboard() {
   }, []);
   return (
     <div className="container mx-auto h-auto bg-[#1d283a]">
-      <div className="w-[100%] md:w-[98%] mx-auto h-auto py-[10px] flex flex-col gap-6">
+      <div className="w-[98%] md:w-[98%] mx-auto h-auto py-[10px] flex flex-col gap-6">
         <div className="w-[100%] flex justify-between items-centers mt-[40px]">
           <div>
             <h2 className="text-1xl flex items-center gap-2 lg:text-2xl font-roboto text-white text-center font-bold">
