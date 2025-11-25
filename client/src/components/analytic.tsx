@@ -13,10 +13,9 @@ import {
   YAxis,
   CartesianGrid,
   ResponsiveContainer,
-  Label,
+  // Label,
   Cell,
 } from "recharts";
-import Home from "./home";
 
 interface expensesdata {
   total: number;
@@ -72,7 +71,7 @@ function ExpensesAnalytics() {
   });
   const [month, setMonth] = useState(currentMonth);
   const [year, setYear] = useState(currentYear);
-  const [sumMonth, setSumMonth] = useState(6);
+  const [sumMonth, _setSumMonth] = useState(6);
   const [sumData, setSumData] = useState<monthlySummary[]>([]);
 
   useEffect(() => {
@@ -255,7 +254,7 @@ function ExpensesAnalytics() {
                 dataKey="value"
                 nameKey="name"
                 outerRadius={100}
-                label={({ name, value }) => {
+                label={({ name, value }: { name: string; value: number }) => {
                   const total = expensesData.reduce(
                     (acc, item) => acc + item.total,
                     0
@@ -300,15 +299,15 @@ function ExpensesAnalytics() {
               {/* Income bars */}
               <Bar
                 dataKey="income"
-                fill="green"
-                radius={[5, 5, 0, 0]} // rounded top corners
+                fill="#82ca9d"
+                radius={[5, 5, 0, 0]} 
               />
 
               {/* Expenses bars */}
               <Bar
                 dataKey="expenses"
-                fill="red"
-                radius={[5, 5, 0, 0]} // rounded top corners
+                fill="#ff4c4c"
+                radius={[5, 5, 0, 0]} 
               />
             </BarChart>
           </ResponsiveContainer>

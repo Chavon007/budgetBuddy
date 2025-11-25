@@ -17,7 +17,7 @@ function Goal() {
   const [achievedGoals, setAchievedGoals] = useState<goalFormData[]>([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [_loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
