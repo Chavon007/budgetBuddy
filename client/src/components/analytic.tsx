@@ -258,34 +258,42 @@ function ExpensesAnalytics() {
                 outerRadius={100}
                 label={(props: PieLabelRenderProps) => {
                   const {
-                    cx = 0,
-                    cy = 0,
-                    midAngle = 0,
-                    innerRadius = 0,
-                    outerRadius = 0,
-                    percent = 0,
+                    cx,
+                    cy,
+                    midAngle,
+                    innerRadius,
+                    outerRadius,
+                    percent,
                     name,
                     value,
                   } = props;
 
                   if (!value || !name) return null;
 
+                  // Cast unknown types to number
+                  const cxNum = Number(cx);
+                  const cyNum = Number(cy);
+                  const midAngleNum = Number(midAngle);
+                  const innerRadiusNum = Number(innerRadius);
+                  const outerRadiusNum = Number(outerRadius);
+                  const percentNum = Number(percent);
+
                   const RADIAN = Math.PI / 180;
                   const radius =
-                    innerRadius + (outerRadius - innerRadius) * 1.2;
-                  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-                  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+                    innerRadiusNum + (outerRadiusNum - innerRadiusNum) * 1.2;
+                  const x = cxNum + radius * Math.cos(-midAngleNum * RADIAN);
+                  const y = cyNum + radius * Math.sin(-midAngleNum * RADIAN);
 
                   return (
                     <text
                       x={x}
                       y={y}
                       fill="white"
-                      textAnchor={x > cx ? "start" : "end"}
+                      textAnchor={x > cxNum ? "start" : "end"}
                       dominantBaseline="central"
                       fontSize={10}
                     >
-                      {`${name}: ₦${value} (${(percent * 100).toFixed(1)}%)`}
+                      {`${name}: ₦${value} (${(percentNum * 100).toFixed(1)}%)`}
                     </text>
                   );
                 }}
