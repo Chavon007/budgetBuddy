@@ -84,7 +84,7 @@ function ExpensesAnalytics() {
   }, []);
 
   useEffect(() => {
-    monthlySummary;
+    monthlySummary();
   }, [sumMonth]);
 
   const fetchExpensesData = async () => {
@@ -108,7 +108,7 @@ function ExpensesAnalytics() {
   const monthlySummary = async () => {
     try {
       const summaryRes = await fetch(
-        `http://localhost:5000/api/monthly-summary?month=${setSumMonth}`,
+        `http://localhost:5000/api/monthly-summary?months=${sumMonth}`,
         {
           credentials: "include",
         }
@@ -119,6 +119,7 @@ function ExpensesAnalytics() {
       }
       const summaryData = await summaryRes.json();
       setSumData(summaryData.data || []);
+      console.log(summaryData.data);
     } catch (err) {
       console.log(err);
     }
@@ -277,15 +278,38 @@ function ExpensesAnalytics() {
           </ResponsiveContainer>
 
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={sumData}>
-              <CartesianGrid />
-              <XAxis dataKey="month" />
-              <YAxis />
+            <BarChart
+              data={sumData}
+              margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
+            >
+              {/* Cartesian grid lines */}
+              <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
+
+              {/* X-axis */}
+              <XAxis dataKey="month" stroke="#555" />
+
+              {/* Y-axis */}
+              <YAxis stroke="#555" />
+
+              {/* Tooltip */}
               <Tooltip />
+
+              {/* Legend */}
               <Legend />
 
-              <Bar dataKey="income" />
-              <Bar dataKey="expenses" />
+              {/* Income bars */}
+              <Bar
+                dataKey="income"
+                fill="green"
+                radius={[5, 5, 0, 0]} // rounded top corners
+              />
+
+              {/* Expenses bars */}
+              <Bar
+                dataKey="expenses"
+                fill="red"
+                radius={[5, 5, 0, 0]} // rounded top corners
+              />
             </BarChart>
           </ResponsiveContainer>
         </div>
