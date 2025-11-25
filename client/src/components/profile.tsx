@@ -28,7 +28,7 @@ function Profile() {
   const getProfile = async () => {
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/users/profile`,
+        `https://budgetbuddy-1-a7pb.onrender.com/api/users/profile`,
         {
           credentials: "include",
         }
@@ -55,7 +55,7 @@ function Profile() {
     e.preventDefault();
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/users/update-profile`,
+        `https://budgetbuddy-1-a7pb.onrender.com/api/users/update-profile`,
         {
           method: "PUT",
           headers: {

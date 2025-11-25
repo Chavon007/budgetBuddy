@@ -34,13 +34,13 @@ function Transactions() {
       try {
         const [incomeRes, expensesRes] = await Promise.all([
           fetch(
-            `${import.meta.env.REACT_APP_VITE_BACKEND_URL}/api/monthly-income?month=${month}&year=${year}`,
+            `https://budgetbuddy-1-a7pb.onrender.com/api/monthly-income?month=${month}&year=${year}`,
             {
               credentials: "include",
             }
           ),
           fetch(
-            `${import.meta.env.REACT_APP_VITE_BACKEND_URL}/api/monthly-expenses?month=${month}&year=${year}`,
+            `https://budgetbuddy-1-a7pb.onrender.com/api/monthly-expenses?month=${month}&year=${year}`,
             {
               credentials: "include",
             }

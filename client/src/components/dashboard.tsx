@@ -76,13 +76,13 @@ function Dashboard() {
     try {
       const [totalIncomeRes, totalExpensesRes, totalBalanceRes] =
         await Promise.all([
-          fetch(`${import.meta.env.VITE_BACKEND_URL}/api/get-total-income`, {
+          fetch(`https://budgetbuddy-1-a7pb.onrender.com/api/get-total-income`, {
             credentials: "include",
           }),
-          fetch(`${import.meta.env.VITE_BACKEND_URL}/api/totalexpenses`, {
+          fetch(`https://budgetbuddy-1-a7pb.onrender.com/api/totalexpenses`, {
             credentials: "include",
           }),
-          fetch(`${import.meta.env.VITE_BACKEND_URL}/api/get-total-balance`, {
+          fetch(`https://budgetbuddy-1-a7pb.onrender.com/api/get-total-balance`, {
             credentials: "include",
           }),
         ]);
@@ -106,7 +106,7 @@ function Dashboard() {
 
   const getGoals = async () => {
     try {
-      const goals = await fetch("http://localhost:5000/api/get-goals", {
+      const goals = await fetch("https://budgetbuddy-1-a7pb.onrender.com/api/get-goals", {
         credentials: "include",
       });
 
@@ -123,7 +123,7 @@ function Dashboard() {
   const expensesData = async () => {
     try {
       const expensesRes = await fetch(
-        "http://localhost:5000/api/get-expenses",
+        "https://budgetbuddy-1-a7pb.onrender.com/api/get-expenses",
         {
           credentials: "include",
         }

@@ -8,7 +8,7 @@ function Authentication() {
 
     const auth = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/users/profile", {
+        const res = await fetch("https://budgetbuddy-1-a7pb.onrender.com/api/users/profile", {
           credentials: "include",
         });
         setIsAuthenticated(res.ok);

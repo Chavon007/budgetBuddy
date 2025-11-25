@@ -37,7 +37,7 @@ function Expenses() {
     setSuccess("");
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/create-expenses`, {
+      const res = await fetch(`https://budgetbuddy-1-a7pb.onrender.com/api/create-expenses`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

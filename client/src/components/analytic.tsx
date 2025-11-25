@@ -109,7 +109,7 @@ function ExpensesAnalytics() {
   const monthlySummary = async () => {
     try {
       const summaryRes = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/monthly-summary?months=${sumMonth}`,
+        `https://budgetbuddy-1-a7pb.onrender.com/api/monthly-summary?months=${sumMonth}`,
         {
           credentials: "include",
         }
@@ -129,13 +129,13 @@ function ExpensesAnalytics() {
     try {
       const [totalIncomeRes, totalExpensesRes, totalBalanceRes] =
         await Promise.all([
-          fetch(`${import.meta.env.VITE_BACKEND_URL}/api/get-total-income`, {
+          fetch(`https://budgetbuddy-1-a7pb.onrender.com/api/get-total-income`, {
             credentials: "include",
           }),
-          fetch(`${import.meta.env.VITE_BACKEND_URL}/api/totalexpenses`, {
+          fetch(`https://budgetbuddy-1-a7pb.onrender.com/api/totalexpenses`, {
             credentials: "include",
           }),
-          fetch(`${import.meta.env.VITE_BACKEND_URL}/api/get-total-balance`, {
+          fetch(`https://budgetbuddy-1-a7pb.onrender.com/api/get-total-balance`, {
             credentials: "include",
           }),
         ]);

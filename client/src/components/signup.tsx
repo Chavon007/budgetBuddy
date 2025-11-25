@@ -54,7 +54,7 @@ function SignUp() {
     setSuccess("");
     setLoading(true);
     try {
-      const res = await fetch(`${import.meta.env.REACT_APP_BACKEND_URL}/api/users/signup`, {
+      const res = await fetch(`https://budgetbuddy-1-a7pb.onrender.com/api/users/signup`, {
         method: "POST",
         credentials: "include",
         headers: {

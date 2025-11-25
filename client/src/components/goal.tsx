@@ -32,7 +32,7 @@ function Goal() {
     setLoading(true);
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/create-goal`, {
+      const res = await fetch(`https://budgetbuddy-1-a7pb.onrender.com/api/create-goal`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,10 +66,10 @@ function Goal() {
       setLoading(true);
       try {
         const [getGoalsRes, achievedGoalsRes] = await Promise.all([
-          fetch(`${import.meta.env.VITE_BACKEND_URL}/api/get-goals`, {
+          fetch(`https://budgetbuddy-1-a7pb.onrender.com/api/get-goals`, {
             credentials: "include",
           }),
-          fetch(`${import.meta.env.VITE_BACKEND_URL}/api/achieved-goals`, {
+          fetch(`https://budgetbuddy-1-a7pb.onrender.com/api/achieved-goals`, {
             credentials: "include",
           }),
         ]);
@@ -95,7 +95,7 @@ function Goal() {
   const completedGoals = async (id: string) => {
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/update-goal/${id}`,
+        `https://budgetbuddy-1-a7pb.onrender.com/api/update-goal/${id}`,
         {
           method: "PATCH",
           headers: {
@@ -120,7 +120,7 @@ function Goal() {
   const deleteGoals = async (id: string) => {
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/delete-goal/${id}`,
+        `https://budgetbuddy-1-a7pb.onrender.com/api/delete-goal/${id}`,
         {
           method: "DELETE",
           credentials: "include",

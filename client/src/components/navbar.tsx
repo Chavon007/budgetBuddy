@@ -31,7 +31,7 @@ function Navbar() {
 
   const handleLogout = async () => {
     try {
-      const log = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/users/logout`, {
+      const log = await fetch(`https://budgetbuddy-1-a7pb.onrender.com/api/users/logout`, {
         method: "POST",
         credentials: "include",
       });
