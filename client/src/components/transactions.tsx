@@ -5,6 +5,7 @@ import { IoTrendingDownOutline } from "react-icons/io5";
 import { IoCart } from "react-icons/io5";
 import { FaNairaSign } from "react-icons/fa6";
 import Back from "./back";
+
 interface incomeIformation {
   amount: number;
   date: string;
@@ -33,13 +34,13 @@ function Transactions() {
       try {
         const [incomeRes, expensesRes] = await Promise.all([
           fetch(
-            `http://localhost:5000/api/monthly-income?month=${month}&year=${year}`,
+            `${import.meta.env.REACT_APP_VITE_BACKEND_URL}/api/monthly-income?month=${month}&year=${year}`,
             {
               credentials: "include",
             }
           ),
           fetch(
-            `http://localhost:5000/api/monthly-expenses?month=${month}&year=${year}`,
+            `${import.meta.env.REACT_APP_VITE_BACKEND_URL}/api/monthly-expenses?month=${month}&year=${year}`,
             {
               credentials: "include",
             }

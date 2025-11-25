@@ -7,6 +7,7 @@ import { GoGoal } from "react-icons/go";
 import { Link } from "react-router-dom";
 import { MdAccountBalanceWallet } from "react-icons/md";
 import Back from "./back";
+
 interface totalData {
   totalIncome: number;
   totalExpenses: number;
@@ -75,13 +76,13 @@ function Dashboard() {
     try {
       const [totalIncomeRes, totalExpensesRes, totalBalanceRes] =
         await Promise.all([
-          fetch("http://localhost:5000/api/get-total-income", {
+          fetch(`${import.meta.env.VITE_BACKEND_URL}/api/get-total-income`, {
             credentials: "include",
           }),
-          fetch("http://localhost:5000/api/totalexpenses", {
+          fetch(`${import.meta.env.VITE_BACKEND_URL}/api/totalexpenses`, {
             credentials: "include",
           }),
-          fetch("http://localhost:5000/api/get-total-balance", {
+          fetch(`${import.meta.env.VITE_BACKEND_URL}/api/get-total-balance`, {
             credentials: "include",
           }),
         ]);

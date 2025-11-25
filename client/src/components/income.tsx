@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoIosArrowRoundBack } from "react-icons/io";
 
+
 interface incomeData {
   amount: number;
   date: string;
@@ -25,7 +26,7 @@ function Income() {
     setSuccess("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/create-income", {
+      const res = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/create-income`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

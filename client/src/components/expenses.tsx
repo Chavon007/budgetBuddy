@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoIosArrowRoundBack } from "react-icons/io";
 
+
 interface expensesFormData {
   amountSpend: number;
   product: string;
@@ -36,7 +37,7 @@ function Expenses() {
     setSuccess("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/create-expenses", {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/create-expenses`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

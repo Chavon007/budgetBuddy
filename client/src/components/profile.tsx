@@ -2,6 +2,7 @@ import { IoMdClose } from "react-icons/io";
 import { useState, useEffect } from "react";
 import { ImProfile } from "react-icons/im";
 import Back from "./back";
+
 interface profileData {
   firstName: string;
   lastName: string;
@@ -26,7 +27,7 @@ function Profile() {
   }, []);
   const getProfile = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/users/profile", {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/profile`, {
         credentials: "include",
       });
       if (!res.ok) {

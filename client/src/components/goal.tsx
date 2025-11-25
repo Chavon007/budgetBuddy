@@ -4,6 +4,7 @@ import { GoGoal } from "react-icons/go";
 import { IoMdCheckmark } from "react-icons/io";
 import { MdDeleteOutline } from "react-icons/md";
 import Back from "./back";
+
 interface goalFormData {
   theGoal: string;
   completed: boolean;
@@ -31,7 +32,7 @@ function Goal() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/create-goal", {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/create-goal`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -65,10 +66,10 @@ function Goal() {
       setLoading(true);
       try {
         const [getGoalsRes, achievedGoalsRes] = await Promise.all([
-          fetch("http://localhost:5000/api/get-goals", {
+          fetch(`${import.meta.env.VITE_BACKEND_URL}/api/get-goals`, {
             credentials: "include",
           }),
-          fetch("http://localhost:5000/api/achieved-goals", {
+          fetch(`${import.meta.env.VITE_BACKEND_URL}/api/achieved-goals`, {
             credentials: "include",
           }),
         ]);
@@ -93,14 +94,17 @@ function Goal() {
 
   const completedGoals = async (id: string) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/update-goal/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ completed: true }),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/update-goal/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ completed: true }),
+        }
+      );
       if (!res.ok) {
         setError("Failed to upadte complted tasks");
         return;
@@ -115,10 +119,13 @@ function Goal() {
 
   const deleteGoals = async (id: string) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/delete-goal/${id}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/delete-goal/${id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
       if (!res.ok) {
         setError("Can't delete goal now");
         return;

@@ -91,7 +91,7 @@ function ExpensesAnalytics() {
   const fetchExpensesData = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/monthly-pie-chart?month=${month}&year=${year}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/monthly-pie-chart?month=${month}&year=${year}`,
         {
           credentials: "include",
         }
@@ -109,7 +109,7 @@ function ExpensesAnalytics() {
   const monthlySummary = async () => {
     try {
       const summaryRes = await fetch(
-        `http://localhost:5000/api/monthly-summary?months=${sumMonth}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/monthly-summary?months=${sumMonth}`,
         {
           credentials: "include",
         }
@@ -129,13 +129,13 @@ function ExpensesAnalytics() {
     try {
       const [totalIncomeRes, totalExpensesRes, totalBalanceRes] =
         await Promise.all([
-          fetch("http://localhost:5000/api/get-total-income", {
+          fetch(`${import.meta.env.VITE_BACKEND_URL}/api/get-total-income`, {
             credentials: "include",
           }),
-          fetch("http://localhost:5000/api/totalexpenses", {
+          fetch(`${import.meta.env.VITE_BACKEND_URL}/api/totalexpenses`, {
             credentials: "include",
           }),
-          fetch("http://localhost:5000/api/get-total-balance", {
+          fetch(`${import.meta.env.VITE_BACKEND_URL}/api/get-total-balance`, {
             credentials: "include",
           }),
         ]);

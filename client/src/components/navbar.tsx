@@ -3,6 +3,7 @@ import { FaNairaSign } from "react-icons/fa6";
 import { IoMdMenu } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { useState } from "react";
+
 const navbarLink = [
   {
     link: "/dashboard",
@@ -30,7 +31,7 @@ function Navbar() {
 
   const handleLogout = async () => {
     try {
-      const log = await fetch("http://localhost:5000/api/users/logout", {
+      const log = await fetch(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/api/users/logout`, {
         method: "POST",
         credentials: "include",
       });
