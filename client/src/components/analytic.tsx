@@ -18,18 +18,20 @@ import {
   Cell,
 } from "recharts";
 
-interface MyPieLabelProps {
+interface FixedPieLabelProps {
   cx: number;
   cy: number;
+  x?: number;
+  y?: number;
+  value?: number;
+  name?: string;
+  percent: number;
   midAngle: number;
   innerRadius: number;
   outerRadius: number;
-  percent: number;
-  name?: string;
-  value?: number;
+  payload?: any;
+  index?: number;
 }
-
-
 
 interface expensesdata {
   total: number;
@@ -268,7 +270,7 @@ function ExpensesAnalytics() {
                 dataKey="value"
                 nameKey="name"
                 outerRadius={100}
-                label={(props: MyPieLabelProps) => {
+                label={(props: FixedPieLabelProps) => {
                   const {
                     cx,
                     cy,
