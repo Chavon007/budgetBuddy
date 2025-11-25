@@ -27,9 +27,12 @@ function Profile() {
   }, []);
   const getProfile = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/profile`, {
-        credentials: "include",
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/profile`,
+        {
+          credentials: "include",
+        }
+      );
       if (!res.ok) {
         console.error("Failed to fetch data");
         return;
@@ -52,7 +55,7 @@ function Profile() {
     e.preventDefault();
     try {
       const res = await fetch(
-        "http://localhost:5000/api/users/update-profile",
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/update-profile`,
         {
           method: "PUT",
           headers: {
