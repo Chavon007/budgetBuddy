@@ -24,7 +24,6 @@ app.use(
 );
 const PORT = 5000;
 
-app.options("*", cors);
 app.get("/", (req, res) => {
   res.send("Budgetbuddy backend is running");
 });
