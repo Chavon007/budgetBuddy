@@ -26,7 +26,7 @@ function Forgetpassword() {
 
     try {
       const res = await fetch(
-        `https://budgetbuddy-1-a7pb.onrender.com/api/forget-password`,
+        `https://budgetbuddy-1-a7pb.onrender.com/api/users/forget-password`,
         {
           method: "POST",
           headers: {
