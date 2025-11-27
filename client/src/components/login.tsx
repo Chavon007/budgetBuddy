@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Forgetpassword from "./forgetpassword";
+
 import React, { useState } from "react";
 interface loginForm {
   email: string;
