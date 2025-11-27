@@ -1,6 +1,7 @@
 import express from "express";
 import dbConfig from "./config/database.js";
 import dotenv from "dotenv";
+dotenv.config();
 import userRouter from "./routes/userRoute.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -8,7 +9,7 @@ import incomeRouter from "./routes/income.js";
 import expensesRouter from "./routes/expenses.js";
 import goalRouter from "./routes/goal.js";
 import analysisRouter from "./routes/anaylstics.js";
-dotenv.config();
+
 dbConfig();
 
 const app = express();
