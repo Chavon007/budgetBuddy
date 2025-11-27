@@ -51,28 +51,33 @@ function Forgetpassword() {
     }
   };
   return (
-    <div>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <h3>Request for password reset</h3>
-          <div>
-            {error && <p>{error}</p>}
-            {success && <p>{success}</p>}
-            <label>Email</label>
-            <input
-              type="email"
-              value={formData.email}
-              placeholder="Enter Your Email"
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
-            />
+    <div className="container mx-auto">
+      <div className="w-[100%] h-[100vh]">
+        <div className="w-[80%] bg-red-100 flex justify-center items-center h-[80vh] mx-auto">
+          <form
+            className="border w-[90%] mx-auto border-gray-500 p-[10px] "
+            onSubmit={handleSubmit}
+          >
+            <h3>Request for password reset</h3>
+            <div className="flex flex-col">
+              {error && <p>{error}</p>}
+              {success && <p>{success}</p>}
+              <label>Email</label>
+              <input
+                type="email"
+                value={formData.email}
+                placeholder="Enter Your Email"
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+              />
 
-            <button type="submit" disabled={loading}>
-              {loading ? "Sending..." : "Submit"}
-            </button>
-          </div>
-        </form>
+              <button type="submit" disabled={loading}>
+                {loading ? "Sending..." : "Submit"}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

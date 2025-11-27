@@ -114,7 +114,12 @@ function Login() {
                 placeholder="Enter your password"
               />
             </div>
-            <Link to="/forget-password">Forget Password</Link>
+            <Link
+              to="/forget-password"
+              className="text-gray-500 font-sans text-sm hover:text-gray-800"
+            >
+              Forgot Password?
+            </Link>
             <button
               className="bg-gray-500 w-[30%] p-[8px] text-sm text-gray-300 font-inter mx-auto mt-[30px] hover:bg-gray-900 cursor-pointer"
               type="submit"
