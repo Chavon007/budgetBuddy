@@ -52,7 +52,7 @@ function Forgetpassword() {
   };
   return (
     <div className="container mx-auto">
-      <div className="w-[100%] bg-red-100 h-[100vh] flex  ">
+      <div className="w-[100%] h-[100vh] flex  ">
         <div className=" w-[100%] lg:w-[50%] flex flex-col h-[60vh] md:[60vh] lg:h-[60vh] mx-auto">
           <h2 className="text-base lg:max-w-[50%] text-center mx-auto font-bartle mt-[80px] lg:mt-[50px] text-gray-500 mb-[10px]">
             BudgetBuddy
