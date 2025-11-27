@@ -35,12 +35,13 @@ function Forgetpassword() {
           body: JSON.stringify(formData),
         }
       );
+      const data = await res.json();
       if (!res.ok) {
-        setError("Can't send link for reset Password");
+        setError(data.message || "Can't send link for reset Password");
         return;
       }
-      const data = await res.json();
-      setSuccess("Password reset link sent");
+
+      setSuccess(data.message || "Password reset link sent");
       setFormData({ email: "" });
 
       console.log(data);
