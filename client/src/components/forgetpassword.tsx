@@ -52,18 +52,30 @@ function Forgetpassword() {
   };
   return (
     <div className="container mx-auto">
-      <div className="w-[100%] h-[100vh]">
-        <div className="w-[80%] bg-red-100 flex justify-center items-center h-[80vh] mx-auto">
+      <div className="w-[100%] bg-red-100 h-[100vh] flex  ">
+        <div className=" w-[100%] lg:w-[50%] flex flex-col h-[60vh] md:[60vh] lg:h-[60vh] mx-auto">
+          <h2 className="text-base lg:max-w-[50%] text-center mx-auto font-bartle mt-[80px] lg:mt-[50px] text-gray-500 mb-[10px]">
+            BudgetBuddy
+          </h2>
           <form
-            className="border w-[90%] mx-auto border-gray-500 p-[10px] "
+            className="border w-[90%] flex flex-col h-[50vh] mx-auto border-gray-500 p-[10px] "
             onSubmit={handleSubmit}
           >
-            <h3>Request for password reset</h3>
-            <div className="flex flex-col">
-              {error && <p>{error}</p>}
-              {success && <p>{success}</p>}
-              <label>Email</label>
+            <h3 className="text-base lg:max-w-[50%] text-center mx-auto font-lora  font-bold text-gray-500">
+              Request for password reset
+            </h3>
+            <div className="flex flex-col mt-[10px]">
+              {error && (
+                <p className="font-serif text-red-500 text-xs">{error}</p>
+              )}
+              {success && (
+                <p className="font-serif text-green-500 text-xs">{success}</p>
+              )}
+              <label className="text-gray-500 font-inter text-base font-bold  mb-[5px] ">
+                Email
+              </label>
               <input
+                className="rounded lg:w-[100%]  rounded-1xl border  text-gray-500 text-xs p-[10px] md:w-[90%] placeholder:text-xs font-sans focus:outline-none"
                 type="email"
                 value={formData.email}
                 placeholder="Enter Your Email"
@@ -72,7 +84,11 @@ function Forgetpassword() {
                 }
               />
 
-              <button type="submit" disabled={loading}>
+              <button
+                className="bg-gray-500 w-[30%] my-[5px] p-[8px] text-sm text-gray-300 font-inter mx-auto mt-[30px] hover:bg-gray-900 cursor-pointer"
+                type="submit"
+                disabled={loading}
+              >
                 {loading ? "Sending..." : "Submit"}
               </button>
             </div>
