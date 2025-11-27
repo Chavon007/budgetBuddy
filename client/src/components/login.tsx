@@ -1,4 +1,5 @@
-
+import { Link } from "react-router-dom";
+import Forgetpassword from "./forgetpassword";
 import React, { useState } from "react";
 interface loginForm {
   email: string;
@@ -25,14 +26,17 @@ function Login() {
     setSuccess("");
     setLoading(true);
     try {
-      const res = await fetch(`https://budgetbuddy-1-a7pb.onrender.com/api/users/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        `https://budgetbuddy-1-a7pb.onrender.com/api/users/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(formData),
+        }
+      );
       if (!res.ok) {
         setError("Invalid credentials");
         setLoading(false);
@@ -110,6 +114,7 @@ function Login() {
                 placeholder="Enter your password"
               />
             </div>
+            <Link to="/forget-password">Forget Password</Link>
             <button
               className="bg-gray-500 w-[30%] p-[8px] text-sm text-gray-300 font-inter mx-auto mt-[30px] hover:bg-gray-900 cursor-pointer"
               type="submit"

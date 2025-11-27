@@ -17,6 +17,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
+import Forgetpassword from "./components/forgetpassword";
 
 function App() {
   const isAuthenticated = Authentication();
@@ -42,6 +43,7 @@ function App() {
             </Protect>
           }
         />
+        <Route path="/forget-password" element={<Forgetpassword />} />
         <Route
           path="/income"
           element={
