@@ -9,4 +9,6 @@ router.post("/login", userController.loginUser);
 router.get("/profile", authMiddleware, userController.getUser);
 router.put("/update-profile", authMiddleware, userController.updateProfile);
 router.post("/logout", authMiddleware, userController.logout);
+router.post("/forget-password", userController.forgetPassword);
+router.put("/reset-password", userController.resetPassword);
 export default router;

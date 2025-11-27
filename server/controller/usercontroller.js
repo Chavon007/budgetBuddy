@@ -1,6 +1,9 @@
 import usermodel from "../model/usermodel.js";
 import passwordUltiz from "../ultiz/hashedPassword.js";
 import generateToken from "../ultiz/token.js";
+import sendmail from "../ultiz/emailsender.js";
+import crypto from "crypto";
+import bcrypt from "bcryptjs";
 
 //Create account
 const createAccount = async (req, res) => {
@@ -124,4 +127,85 @@ const logout = async (req, res) => {
     res.status(200).json({ success: true, message: "Logout successful" });
   } catch (err) {}
 };
-export default { createAccount, loginUser, getUser, updateProfile, logout };
+
+const forgetPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Please email file can't be empty" });
+    }
+    const userEmail = await usermodel.findOne({ email });
+    if (!userEmail) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+    const resetToken = crypto.randomBytes(32).toString("hex");
+
+    userEmail.resetToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+    userEmail.resetExpires = Date.now() + 15 * 60 * 1000;
+
+    await userEmail.save();
+
+    await sendmail(email, resetToken);
+    res
+      .status(200)
+      .json({ success: true, message: "Password reset link sent" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  try {
+    const { token } = req.query;
+    const { password } = req.body;
+    if (!password) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Please input new password" });
+    }
+
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+    const user = await usermodel.findOne({
+      resetToken: hashedToken,
+      resetExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid or expired token" });
+    }
+
+    const salt = bcrypt.genSaltSync(10);
+    const hashedpwd = bcrypt.hashSync(password, salt);
+
+    user.password = hashedpwd;
+    user.resetExpires = undefined;
+    user.resetToken = undefined;
+
+    await user.save();
+    res.status(200).json({
+      success: true,
+      message: "Password updated successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+export default {
+  forgetPassword,
+  createAccount,
+  loginUser,
+  getUser,
+  updateProfile,
+  logout,
+  resetPassword,
+};
