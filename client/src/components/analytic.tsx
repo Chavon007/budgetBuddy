@@ -307,26 +307,33 @@ function ExpensesAnalytics() {
             </PieChart>
           </ResponsiveContainer>
 
-           {/* <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={300}>
             <BarChart
-              data={sumData.map((item) => ({
-                ...item,
-                month: String(item.month),
-                income: Number(item.income ?? 0),
-                expenses: Number(item.expenses ?? 0),
-              }))}
+              data={sumData}
               margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
             >
+              {/* Cartesian grid lines */}
               <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
+
+              {/* X-axis */}
               <XAxis dataKey="month" stroke="#555" />
+
+              {/* Y-axis */}
               <YAxis stroke="#555" />
+
+              {/* Tooltip */}
               <Tooltip />
+
+              {/* Legend */}
               <Legend />
 
+              {/* Income bars */}
               <Bar dataKey="income" fill="#82ca9d" radius={[5, 5, 0, 0]} />
+
+              {/* Expenses bars */}
               <Bar dataKey="expenses" fill="#ff4c4c" radius={[5, 5, 0, 0]} />
             </BarChart>
-          </ResponsiveContainer> */}
+          </ResponsiveContainer>
         </div>
       </div>
     </div>
