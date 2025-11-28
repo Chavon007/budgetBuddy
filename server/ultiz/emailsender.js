@@ -11,6 +11,22 @@ const transport = nodemailer.createTransport({
     user: process.env.GMAIL_ACCOUNT,
     pass: process.env.APP_PASSKEY,
   },
+
+  connectionTimeout: 5000, // 5 seconds to connect
+  greetingTimeout: 3000, // 3 seconds for greeting
+  socketTimeout: 10000, // 10 seconds for socket timeout
+  // Add pool to reuse connections
+  pool: true,
+  maxConnections: 1,
+  maxMessages: 3,
+});
+
+transport.verify((error, success) => {
+  if (error) {
+    console.error(" Email transport verification failed:", error);
+  } else {
+    console.log(" Email server is ready to send messages");
+  }
 });
 
 const sendmail = async (email, token) => {
