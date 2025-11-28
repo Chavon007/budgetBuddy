@@ -121,10 +121,11 @@ function ExpensesAnalytics() {
         return "Failed to fetch data";
       }
       const summaryData = await summaryRes.json();
-      setSumData(summaryData.data || []);
-      console.log(summaryData.data);
+      const summary = Array.isArray(summaryData.data) ? summaryData.data : [];
+      setSumData(summary);
     } catch (err) {
       console.log(err);
+      setSumData([]);
     }
   };
   const fetchTotalData = async () => {
