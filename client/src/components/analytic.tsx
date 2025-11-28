@@ -307,7 +307,7 @@ function ExpensesAnalytics() {
             </PieChart>
           </ResponsiveContainer>
 
-          <ResponsiveContainer width="100%" height={300}>
+           {/* <ResponsiveContainer width="100%" height={300}>
             <BarChart
               data={sumData.map((item) => ({
                 ...item,
@@ -326,7 +326,7 @@ function ExpensesAnalytics() {
               <Bar dataKey="income" fill="#82ca9d" radius={[5, 5, 0, 0]} />
               <Bar dataKey="expenses" fill="#ff4c4c" radius={[5, 5, 0, 0]} />
             </BarChart>
-          </ResponsiveContainer>
+          </ResponsiveContainer> */}
         </div>
       </div>
     </div>
