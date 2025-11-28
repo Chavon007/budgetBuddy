@@ -37,7 +37,7 @@ function Resetpassword() {
       const res = await fetch(
         `https://budgetbuddy-1-a7pb.onrender.com/api/users/reset-password?token=${token}`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
