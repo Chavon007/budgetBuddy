@@ -14,7 +14,7 @@ const transport = nodemailer.createTransport({
 });
 
 const sendmail = async (email, token) => {
-  const resetURL = `${process.env.FRONTEND_URL}/reset-password/${token}`;
+  const resetURL = `${process.env.FRONTEND_URL}/reset-password/?token=${token}`;
 
   await transport.sendMail({
     from: `budgetbuddy <${process.env.GMAIL_ACCOUNT}>`,

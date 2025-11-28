@@ -11,6 +11,7 @@ import Dashboard from "./components/dashboard";
 import ExpensesAnalytics from "./components/analytic";
 import Protect from "./components/protectedRoutes";
 import Authentication from "./hook/auth";
+import Resetpassword from "./components/resetpassword";
 import {
   Route,
   BrowserRouter as Router,
@@ -35,6 +36,7 @@ function App() {
             </Protect>
           }
         />
+        <Route path="/reset-password" element={<Resetpassword />} />
         <Route
           path="/transactions"
           element={

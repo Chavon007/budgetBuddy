@@ -62,7 +62,7 @@ function SignUp() {
         },
         body: JSON.stringify(formData),
       });
-      console.log(import.meta.env.VITE_BACKEND_URL)
+     
 
       if (!res.ok) {
         setError("Failed to signup");
