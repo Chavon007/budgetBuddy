@@ -134,7 +134,7 @@ const forgetPassword = async (req, res) => {
     if (!email) {
       return res
         .status(400)
-        .json({ success: false, message: "Please email file can't be empty" });
+        .json({ success: false, message: "Please email field can't be empty" });
     }
     const userEmail = await usermodel.findOne({ email });
     if (!userEmail) {
@@ -152,7 +152,9 @@ const forgetPassword = async (req, res) => {
 
     await userEmail.save();
 
-    await sendmail(email, resetToken);
+    sendmail(email, resetToken).catch((err) => {
+      console.error("Email sending failed");
+    });
     res
       .status(200)
       .json({ success: true, message: "Password reset link sent" });
