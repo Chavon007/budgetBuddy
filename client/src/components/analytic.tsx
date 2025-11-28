@@ -144,7 +144,7 @@ function ExpensesAnalytics() {
         totalIncome: data.data.income ?? 0,
         totalExpenses: data.data.expenses ?? 0,
         totalBalance: data.data.balance ?? 0,
-        date: `${data.data.month ?? ""}/${data.data.year ?? ""}`,
+        date: new Date().toISOString(),
       });
     } catch (err) {
       console.log("Can't fetch Data", err);
