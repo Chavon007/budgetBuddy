@@ -132,7 +132,6 @@ const totalExpenses = async (req, res) => {
 };
 
 // monthly expenses
-
 const monthlyExpenses = async (req, res) => {
   try {
     const userId = new mongoose.Types.ObjectId(req.user.id);

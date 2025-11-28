@@ -3,6 +3,7 @@ import Income from "../model/income.js";
 import Expenses from "../model/expenses.js";
 
 import { monthRange } from "../ultiz/monthRange.js";
+
 // CREATE INCOME
 const createIncome = async (req, res) => {
   try {
@@ -75,7 +76,7 @@ const deletedIncome = async (req, res) => {
 // GET TOTAL INCOME
 const totalIncome = async (req, res) => {
   try {
-    const userId = new mongoose.Types.ObjectId(req.user.id); // ✅ FIXED
+    const userId = new mongoose.Types.ObjectId(req.user.id);
 
     const totalIncomes = await Income.aggregate([
       { $match: { userId } },
@@ -148,6 +149,56 @@ const monthlyIncome = async (req, res) => {
   }
 };
 
+// monthly summary
+
+const monthlySummary = async (req, res) => {
+  try {
+    const userId = new mongoose.Types.ObjectId(req.user.id);
+    const now = new Date();
+
+    const month = parseInt(req.query.month) || now.getMonth() + 1;
+    const year = parseInt(req.query.year) || now.getFullYear();
+
+    const { start, end } = monthRange(year, month);
+
+    const monthlyIncome = await Income.aggregate([
+      {
+        $match: { userId, date: { $gte: start, $lt: end } },
+      },
+      { $group: { _id: null, allIncomes: { $sum: "$amount" } } },
+    ]);
+
+    const totalIncomeMonthly = monthlyIncome[0]?.allIncomes || 0;
+
+    const monthlyExpenses = await Expenses.aggregate([
+      {
+        $match: { userId, date: { $gte: start, $lt: end } },
+      },
+      {
+        $group: { _id: null, allExpenses: { $sum: "$amountSpend" } },
+      },
+    ]);
+
+    const totalExpensesMonthly = monthlyExpenses[0]?.allExpenses || 0;
+
+    const monthlyBalance = totalIncomeMonthly - totalExpensesMonthly;
+
+    res.status(200).json({
+      success: true,
+      message: "Toatl balance fetched",
+      data: {
+        income: totalIncomeMonthly,
+        expenses: totalExpensesMonthly,
+        balance: monthlyBalance,
+        year,
+        month,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
 export default {
   createIncome,
   getIncome,
@@ -155,4 +206,5 @@ export default {
   totalIncome,
   totalBalance,
   monthlyIncome,
+  monthlySummary,
 };

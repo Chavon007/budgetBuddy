@@ -72,32 +72,23 @@ function Dashboard() {
 
   const [goal, setGoal] = useState<setGoalData[]>([]);
 
-  const totalData = async () => {
+  const fetchTotalData = async () => {
     try {
-      const [totalIncomeRes, totalExpensesRes, totalBalanceRes] =
-        await Promise.all([
-          fetch(`https://budgetbuddy-1-a7pb.onrender.com/api/get-total-income`, {
-            credentials: "include",
-          }),
-          fetch(`https://budgetbuddy-1-a7pb.onrender.com/api/totalexpenses`, {
-            credentials: "include",
-          }),
-          fetch(`https://budgetbuddy-1-a7pb.onrender.com/api/get-total-balance`, {
-            credentials: "include",
-          }),
-        ]);
-      if (!totalBalanceRes.ok || !totalExpensesRes.ok || !totalIncomeRes.ok) {
+      const fetchSummary = await fetch(
+        `https://budgetbuddy-1-a7pb.onrender.com/api/monthly-summary`,
+        {
+          credentials: "include",
+        }
+      );
+      const data = await fetchSummary.json();
+      if (!fetchSummary.ok) {
         return "Failed to fetch data";
       }
-      const totalIncomeData = await totalIncomeRes.json();
-      const totalExpensesData = await totalExpensesRes.json();
-      const totalBalanceData = await totalBalanceRes.json();
-
       setTotal({
-        totalBalance: totalBalanceData.data || 0,
-        totalExpenses: totalExpensesData.data || 0,
-        totalIncome: totalIncomeData.data || 0,
-        date: new Date().toISOString(),
+        totalIncome: data.data.income,
+        totalExpenses: data.data.expenses,
+        totalBalance: data.data.balance,
+        date: `${data.data.month}/${data.data.year}`,
       });
     } catch (err) {
       console.log("Can't fetch Data", err);
@@ -106,9 +97,12 @@ function Dashboard() {
 
   const getGoals = async () => {
     try {
-      const goals = await fetch("https://budgetbuddy-1-a7pb.onrender.com/api/get-goals", {
-        credentials: "include",
-      });
+      const goals = await fetch(
+        "https://budgetbuddy-1-a7pb.onrender.com/api/get-goals",
+        {
+          credentials: "include",
+        }
+      );
 
       if (!goals.ok) {
         throw new Error("Failed to fetch data");
@@ -139,7 +133,7 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    totalData();
+    fetchTotalData();
     getGoals();
     expensesData();
   }, []);
@@ -308,7 +302,7 @@ function Dashboard() {
                       {item.quantity}
                     </span>{" "}
                     <span>
-                      <small>{item.date}</small>
+                      <small>{new Date(item.date).toLocaleDateString()}</small>
                     </span>
                   </p>
                 </span>

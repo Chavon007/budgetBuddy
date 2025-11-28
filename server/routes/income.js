@@ -10,6 +10,7 @@ router.delete(
   authMiddleware,
   incomeController.deletedIncome
 );
+router.get("/monthly-summary", authMiddleware, incomeController.monthlySummary);
 router.get("/get-total-income", authMiddleware, incomeController.totalIncome);
 router.get("/get-total-balance", authMiddleware, incomeController.totalBalance);
 router.get("/monthly-income", authMiddleware, incomeController.monthlyIncome);

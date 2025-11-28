@@ -67,7 +67,7 @@ function Login() {
             Let's keep our financial record
           </h2>
           <form
-            className="flex gap-4 border border-gray-500 p-[10px] mt-[50px] lg:mt-[60px] w-[90%] flex-col lg:h-[50vh]"
+            className="flex gap-4 border border-gray-500 p-[10px] mt-[50px] lg:mt-[60px] w-[90%] flex-col lg:h-[55vh]"
             onSubmit={handleSubmit}
           >
             <div className="">
