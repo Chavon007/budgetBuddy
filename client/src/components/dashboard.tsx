@@ -85,10 +85,10 @@ function Dashboard() {
         return "Failed to fetch data";
       }
       setTotal({
-        totalIncome: data.data.income,
-        totalExpenses: data.data.expenses,
-        totalBalance: data.data.balance,
-        date: `${data.data.month}/${data.data.year}`,
+        totalIncome: data.data.income ?? 0,
+        totalExpenses: data.data.expenses ?? 0,
+        totalBalance: data.data.balance ?? 0,
+        date: `${data.data.month ?? ""}/${data.data.year ?? ""}`,
       });
     } catch (err) {
       console.log("Can't fetch Data", err);
@@ -168,7 +168,7 @@ function Dashboard() {
             </h4>
             <p className="text-3xl max-w-[200px]  justify-center italic font-lora text-gray-300 flex">
               <span>₦</span>
-              <span>{total.totalBalance.toLocaleString()}</span>
+              <span>{(total.totalBalance ?? 0).toLocaleString()}</span>
             </p>
           </div>
           <div className="gap-3 flex flex-col mt-[10px]">
@@ -185,7 +185,7 @@ function Dashboard() {
                 </h5>
                 <p className="text-1xl pl-[10px] italic font-lora text-gray-300 flex ga-2">
                   ₦
-                  {(total[mTotal.key as keyof totalData] || 0).toLocaleString()}
+                  {(total[mTotal.key as keyof totalData] ?? 0).toLocaleString()}
                 </p>
                 <small className="text-xs pl-[10px] italic font-lora text-gray-100">
                   {total.date}
@@ -302,13 +302,17 @@ function Dashboard() {
                       {item.quantity}
                     </span>{" "}
                     <span>
-                      <small>{new Date(item.date).toLocaleDateString()}</small>
+                      <small>
+                        {item.date
+                          ? new Date(item.date).toLocaleDateString()
+                          : "-"}
+                      </small>
                     </span>
                   </p>
                 </span>
                 <span>
                   <p className="text-red-300 text-1xl text-lora italic">
-                    - ₦{item.amountSpend.toLocaleString()}
+                    - ₦{(item.amountSpend ?? 0).toLocaleString()}
                   </p>
                 </span>
               </div>
