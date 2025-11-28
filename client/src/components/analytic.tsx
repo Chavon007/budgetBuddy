@@ -32,7 +32,7 @@ interface totalData {
 }
 interface monthlySummary {
   year: number;
-  month: string;
+  month: number | string;
   expenses: number;
   income: number;
 }
@@ -245,8 +245,8 @@ function ExpensesAnalytics() {
             <PieChart>
               <Pie
                 data={expensesData.map((e) => ({
-                  name: e.product,
-                  value: e.total ?? 0,
+                  name: String(e.product ?? "Unknown"),
+                  value: Number(e.total ?? 0),
                 }))}
                 dataKey="value"
                 nameKey="name"
