@@ -81,7 +81,7 @@ function ExpensesAnalytics() {
   }, [month, year]);
 
   useEffect(() => {
-    totalData();
+    fetchTotalData();
   }, []);
 
   useEffect(() => {
@@ -127,38 +127,23 @@ function ExpensesAnalytics() {
       console.log(err);
     }
   };
-  const totalData = async () => {
+  const fetchTotalData = async () => {
     try {
-      const [totalIncomeRes, totalExpensesRes, totalBalanceRes] =
-        await Promise.all([
-          fetch(
-            `https://budgetbuddy-1-a7pb.onrender.com/api/get-total-income`,
-            {
-              credentials: "include",
-            }
-          ),
-          fetch(`https://budgetbuddy-1-a7pb.onrender.com/api/totalexpenses`, {
-            credentials: "include",
-          }),
-          fetch(
-            `https://budgetbuddy-1-a7pb.onrender.com/api/get-total-balance`,
-            {
-              credentials: "include",
-            }
-          ),
-        ]);
-      if (!totalBalanceRes.ok || !totalExpensesRes.ok || !totalIncomeRes.ok) {
+      const fetchSummary = await fetch(
+        `https://budgetbuddy-1-a7pb.onrender.com/api/monthly-summary`,
+        {
+          credentials: "include",
+        }
+      );
+      const data = await fetchSummary.json();
+      if (!fetchSummary.ok) {
         return "Failed to fetch data";
       }
-      const totalIncomeData = await totalIncomeRes.json();
-      const totalExpensesData = await totalExpensesRes.json();
-      const totalBalanceData = await totalBalanceRes.json();
-
       setTotal({
-        totalBalance: totalBalanceData.data || 0,
-        totalExpenses: totalExpensesData.data || 0,
-        totalIncome: totalIncomeData.data || 0,
-        date: new Date().toISOString(),
+        totalIncome: data.data.income ?? 0,
+        totalExpenses: data.data.expenses ?? 0,
+        totalBalance: data.data.balance ?? 0,
+        date: `${data.data.month ?? ""}/${data.data.year ?? ""}`,
       });
     } catch (err) {
       console.log("Can't fetch Data", err);
@@ -199,10 +184,10 @@ function ExpensesAnalytics() {
                 </h4>
                 <p className="text-xs italic font-lora text-gray-300">
                   ₦
-                  {(total[header.key as keyof totalData] || 0).toLocaleString()}
+                  {(total[header.key as keyof totalData] ?? 0).toLocaleString()}
                 </p>
                 <small className="text-gray-400">
-                  {new Date(total.date).toLocaleDateString()}
+                  {total.date ? new Date(total.date).toLocaleDateString() : "-"}
                 </small>
               </div>
             ))}
@@ -261,7 +246,7 @@ function ExpensesAnalytics() {
               <Pie
                 data={expensesData.map((e) => ({
                   name: e.product,
-                  value: e.total,
+                  value: e.total ?? 0,
                 }))}
                 dataKey="value"
                 nameKey="name"
